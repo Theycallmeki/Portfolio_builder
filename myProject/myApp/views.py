@@ -14,6 +14,11 @@ def main(request):
 
     return render(request, 'myApp/main.html', context)
 
+def create(request):
+    context={}
+
+    return render(request, 'myApp/create.html')
+
 def navbar(request):
     context={}
 
