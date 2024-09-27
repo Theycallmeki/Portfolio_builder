@@ -172,17 +172,16 @@ from .models import AboutMe
 @login_required
 def AboutMeCreateView(request):
     if request.method == 'POST':
-        form = AboutMeForm(request.POST, request.FILES)
+        form = AboutMeForm(request.POST, request.FILES)  # Handle form submission
         if form.is_valid():
-            Aboutme = form.save(commit=False)
-            Aboutme.user = request.user  # Set user to the logged-in user
-            Aboutme.save()
+            Aboutme = form.save(commit=False)  # Create the object but don't save yet
+            Aboutme.user = request.user  # Assign the logged-in user to the object
+            Aboutme.save()  # Save the object
             return redirect('main')  # Redirect to the desired page after saving
     else:
-        form = AboutMeForm()
+        form = AboutMeForm()  # Create a new form instance for GET requests
 
-    return render(request, 'myApp/template1.html', {'form': form})
-
+    return render(request, 'myApp/template1.html', {'form': form})  # Render the template with the form
 
 
 @login_required

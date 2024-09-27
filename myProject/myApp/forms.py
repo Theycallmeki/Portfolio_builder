@@ -40,4 +40,13 @@ from .models import AboutMe
 class AboutMeForm(forms.ModelForm):
     class Meta:
         model = AboutMe
-        fields = '__all__'
+        fields = [
+            'image',
+            'description',
+            'background_nationality',
+            'background_hometown',
+            'background_languages',
+            'skills',
+            'education',
+            'experience',
+        ]
