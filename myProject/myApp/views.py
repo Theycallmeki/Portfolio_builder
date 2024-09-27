@@ -170,7 +170,7 @@ from .forms import AboutMeForm  # Ensure you have imported your form
 from .models import AboutMe
 
 @login_required
-def AboutMeCreateView(request):
+def Template1CreateView(request):
     if request.method == 'POST':
         form = AboutMeForm(request.POST, request.FILES)  # Handle form submission
         if form.is_valid():
@@ -185,11 +185,26 @@ def AboutMeCreateView(request):
 
 
 @login_required
-def aboutme_list(request):
-    # Get portfolios associated with the logged-in user
-    aboutme = aboutme.objects.filter(user=request.user)
+def Template1EditView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES, instance=about_me)
+        if form.is_valid():
+            form.save()
+            return redirect('template_list')
+    else:
+        form = AboutMeForm(instance=about_me)
 
-    return render(request, 'myApp/portfolio_list.html', {'about_me': aboutme})
+    return render(request, 'myApp/edit_template1.html', {'form': form})
+
+@login_required
+def Template1DeleteView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        about_me.delete()
+        return redirect('main')
+
+    return render(request, 'myApp/savedTemplate1.html', {'about_me': about_me})
 
 
 # views.py
@@ -197,11 +212,17 @@ def aboutme_list(request):
 from django.shortcuts import render
 from .models import AboutMe
 
-def about_me_list(request):
-    about_me_profiles = AboutMe.objects.all()
-    return render(request, 'myApp/savedTemplates.html',  {'templates': about_me_profiles})
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from .models import AboutMe
+@login_required
+def template1_list(request):
+    about_me_profiles = AboutMe.objects.filter(user=request.user)
+    print(about_me_profiles)  # Check the filtered profiles in your console
 
-
+    return render(request, 'myApp/savedTemplate1.html', {
+        'templates': about_me_profiles
+    })
 
 
 

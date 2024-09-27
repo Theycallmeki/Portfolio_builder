@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me List</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .portfolio-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .portfolio-card {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .portfolio-card h2 {
+            font-size: 1.5em;
+            margin: 0 0 10px;
+        }
+        .portfolio-card p {
+            font-size: 1em;
+            color: #555;
+        }
+        .portfolio-card img {
+            width: 100px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn-delete {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+{% include 'components/navbar.html' %}
+
+<body>
+    <h1>Saved Templates</h1>
+    <div class="portfolio-container">
+        {% for profile in templates %}
+            <div class="portfolio-card" id="profile-{{ profile.id }}">
+                <h2>{{ profile.user.username }}</h2>
+                <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
+                <p>{{ profile.description }}</p>
+                <p><strong>Nationality:</strong> {{ profile.background_nationality }}</p>
+                <p><strong>Hometown:</strong> {{ profile.background_hometown }}</p>
+                <p><strong>Languages:</strong> {{ profile.background_languages }}</p>
+                <p><strong>Skills:</strong> {{ profile.skills }}</p>
+                <p><strong>Education:</strong> {{ profile.education }}</p>
+                <p><strong>Experience:</strong> {{ profile.experience }}</p>
+                <div class="button-container">
+                    <a href="{% url 'template1-edit' profile.id %}" class="btn">Edit</a>
+                    <button onclick="downloadPDF('{{ profile.id }}')" class="btn">Download PDF</button>
+                    <form action="{% url 'template1-delete' profile.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% empty %}
+            <div class="portfolio-card">No profiles available.</div>
+        {% endfor %}
+    </div>
+
+    <script>
+        async function downloadPDF(profileId) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+
+            // Fetching the profile data
+            const profileCard = document.getElementById(`profile-${profileId}`);
+            const profileData = profileCard.innerText;
+            const imageElement = document.getElementById(`image-${profileId}`);
+
+            // Ensure the image is fully loaded
+            imageElement.onload = async () => {
+                try {
+                    const imgData = await getBase64Image(imageElement);
+                    // Adding text and image to PDF
+                    pdf.text(profileData, 10, 10);
+                    pdf.addImage(imgData, 'JPEG', 10, 40, 50, 50); // Adjust x, y, width, height as needed
+                    pdf.save(`template_${profileId}.pdf`);
+                } catch (error) {
+                    console.error('Error while generating PDF:', error);
+                }
+            };
+
+            // Handle image load error
+            imageElement.onerror = () => {
+                console.error('Error loading image:', imageElement.src);
+            };
+
+            // Trigger image loading to call onload
+            imageElement.src = imageElement.src; // This triggers the load event
+        }
+
+        function getBase64Image(img) {
+            return new Promise((resolve, reject) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+
+                const imgElement = new Image();
+                imgElement.src = img.src;
+                imgElement.crossOrigin = 'anonymous'; // Ensure CORS is handled
+                imgElement.onload = function () {
+                    canvas.width = imgElement.width;
+                    canvas.height = imgElement.height;
+                    ctx.drawImage(imgElement, 0, 0);
+                    const dataURL = canvas.toDataURL('image/jpeg');
+                    resolve(dataURL);
+                };
+                imgElement.onerror = function (err) {
+                    console.error('Image failed to load:', err);
+                    reject(err);
+                };
+            });
+        }
+    </script>
+</body>
+</html>

@@ -18,10 +18,10 @@ urlpatterns = [
     path('portfolios/delete/<int:portfolio_id>/', views.delete_portfolio, name='delete_portfolio'),
     path('portfolios/', views.portfolio_list, name='portfolio_list'),  # For function-based view
     path('ckeditor/upload/', views.upload_image, name='upload_image'),
-    path('aboutme_create/', views.AboutMeCreateView, name='aboutme_create'),
-    path('aboutme_list/', views.aboutme_list, name='aboutme_list'),
-    path('saved_templates/', views.about_me_list, name='template_list'),
-    path('view_templates/', views.about_me_list, name='template_list'),
+    path('template1_create/', views.Template1CreateView, name='template1_create'),
+    path('saved_template1/', views.template1_list, name='template_list'),
+    path('edit/<int:pk>/template', views.Template1EditView, name='template1-edit'),
+    path('delete/<int:pk>/template', views.Template1DeleteView, name='template1-delete'),
 
 
 
