@@ -26,24 +26,24 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField  # Assuming you're using CKEditor for rich text
 
+class Category(models.Model):
+    # Define the type field to link it with AboutMe's type
+    type = models.CharField(max_length=100, unique=True)  # Unique type for categories
+
+    def __str__(self):
+        return self.type
+
 class AboutMe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='about_me', null=True)
     image = models.ImageField(upload_to='media/')
     description = models.CharField(max_length=200)
-    
-    # Background information
     background_nationality = models.CharField(max_length=100)
     background_hometown = models.CharField(max_length=100)
     background_languages = models.CharField(max_length=255)  # Comma-separated languages
-    
-    # Skills
     skills = models.CharField(max_length=255)  # Comma-separated skills
-    
-    # Education
     education = models.CharField(max_length=255)  # Comma-separated education details
-    
-    # Experience
     experience = models.TextField()  # A detailed text field for experience
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='about_me_categories', null=True)
 
     def __str__(self):
         return f"{self.user.username}'s About Me"

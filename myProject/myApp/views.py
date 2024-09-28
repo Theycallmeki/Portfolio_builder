@@ -168,20 +168,26 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .forms import AboutMeForm  # Ensure you have imported your form
 from .models import AboutMe
+from .models import Category
 
 @login_required
 def Template1CreateView(request):
     if request.method == 'POST':
         form = AboutMeForm(request.POST, request.FILES)  # Handle form submission
         if form.is_valid():
-            Aboutme = form.save(commit=False)  # Create the object but don't save yet
-            Aboutme.user = request.user  # Assign the logged-in user to the object
-            Aboutme.save()  # Save the object
+            aboutme = form.save(commit=False)  # Create the object but don't save yet
+            aboutme.user = request.user  # Assign the logged-in user to the object
+
+            # Set the category to "Template1"
+            template1_category = Category.objects.get(type='template1')
+            aboutme.category = template1_category  # Assign the category
+
+            aboutme.save()  # Save the object
             return redirect('main')  # Redirect to the desired page after saving
     else:
         form = AboutMeForm()  # Create a new form instance for GET requests
 
-    return render(request, 'myApp/template1.html', {'form': form})  # Render the template with the form
+    return render(request, 'myApp/template1.html', {'form': form})  # Render the te Render the template with the form
 
 
 @login_required
@@ -215,15 +221,39 @@ from .models import AboutMe
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import AboutMe
-@login_required
 def template1_list(request):
-    about_me_profiles = AboutMe.objects.filter(user=request.user)
+    # Filter profiles by the logged-in user and the specified category
+    template1_category = Category.objects.get(type='template1')
+    about_me_profiles = AboutMe.objects.filter(user=request.user, category=template1_category)
     print(about_me_profiles)  # Check the filtered profiles in your console
 
     return render(request, 'myApp/savedTemplate1.html', {
         'templates': about_me_profiles
     })
 
+
+@login_required
+def Template2CreateView(request):
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES)  # Handle form submission
+        if form.is_valid():
+            Aboutme = form.save(commit=False)  # Create the object but don't save yet
+            Aboutme.user = request.user  # Assign the logged-in user to the object
+            Aboutme.save()  # Save the object
+            return redirect('main')  # Redirect to the desired page after saving
+    else:
+        form = AboutMeForm()  # Create a new form instance for GET requests
+
+    return render(request, 'myApp/temp2/template2.html', {'form': form})
+
+@login_required
+def template2_list(request):
+    about_me_profiles = AboutMe.objects.filter(user=request.user)
+    print(about_me_profiles)  # Check the filtered profiles in your console
+
+    return render(request, 'myApp/temp2/savedTemplate2.html', {
+        'templates': about_me_profiles
+    })
 
 
 
