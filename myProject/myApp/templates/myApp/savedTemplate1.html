@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me List</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,9 +58,9 @@
         }
     </style>
 </head>
-{% include 'components/navbar.html' %}
 
 <body>
+    {% include 'components/navbar.html' %}
     <h1>Saved Templates</h1>
     <div class="portfolio-container">
         {% for profile in templates %}
@@ -77,11 +76,11 @@
                 <p><strong>Experience:</strong> {{ profile.experience }}</p>
                 <div class="button-container">
                     <a href="{% url 'template1-edit' profile.id %}" class="btn">Edit</a>
-                    <button onclick="downloadPDF('{{ profile.id }}')" class="btn">Download PDF</button>
                     <form action="{% url 'template1-delete' profile.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-delete">Delete</button>
                     </form>
+                    <button class="btn" onclick="downloadPDF('{{ profile.id }}')">Download</button>
                 </div>
             </div>
         {% empty %}
@@ -89,59 +88,46 @@
         {% endfor %}
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
     <script>
-        async function downloadPDF(profileId) {
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF();
-
-            // Fetching the profile data
-            const profileCard = document.getElementById(`profile-${profileId}`);
-            const profileData = profileCard.innerText;
-            const imageElement = document.getElementById(`image-${profileId}`);
-
-            // Ensure the image is fully loaded
-            imageElement.onload = async () => {
-                try {
-                    const imgData = await getBase64Image(imageElement);
-                    // Adding text and image to PDF
-                    pdf.text(profileData, 10, 10);
-                    pdf.addImage(imgData, 'JPEG', 10, 40, 50, 50); // Adjust x, y, width, height as needed
-                    pdf.save(`template_${profileId}.pdf`);
-                } catch (error) {
-                    console.error('Error while generating PDF:', error);
+        function downloadPDF(profileId) {
+            // Select the profile card to convert to PDF
+            var element = document.getElementById('profile-' + profileId);
+    
+            // Hide the edit, delete, download buttons, and user information
+            var buttons = element.querySelectorAll('.btn, .btn-delete');
+            var userInfo = element.querySelector('h2');
+            
+            buttons.forEach(button => button.style.display = 'none');
+            userInfo.style.display = 'none';
+    
+            // PDF options to ensure it fills the entire page
+            var opt = {
+                margin: 0, // Remove all margins
+                filename: 'template.pdf', // Name of the downloaded file
+                image: { type: 'jpeg', quality: 1 }, // High-quality images
+                html2canvas: { scale: 2 }, // Improve resolution
+                jsPDF: { 
+                    unit: 'px', // Use pixels for units to match screen size
+                    format: [element.offsetWidth, element.offsetHeight], // Use the element's dimensions
+                    orientation: 'portrait' // Change to 'landscape' if necessary
                 }
             };
-
-            // Handle image load error
-            imageElement.onerror = () => {
-                console.error('Error loading image:', imageElement.src);
-            };
-
-            // Trigger image loading to call onload
-            imageElement.src = imageElement.src; // This triggers the load event
-        }
-
-        function getBase64Image(img) {
-            return new Promise((resolve, reject) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-
-                const imgElement = new Image();
-                imgElement.src = img.src;
-                imgElement.crossOrigin = 'anonymous'; // Ensure CORS is handled
-                imgElement.onload = function () {
-                    canvas.width = imgElement.width;
-                    canvas.height = imgElement.height;
-                    ctx.drawImage(imgElement, 0, 0);
-                    const dataURL = canvas.toDataURL('image/jpeg');
-                    resolve(dataURL);
-                };
-                imgElement.onerror = function (err) {
-                    console.error('Image failed to load:', err);
-                    reject(err);
-                };
-            });
+    
+            // Use html2pdf to generate the PDF
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save()
+                .then(() => {
+                    // Show the hidden elements again after PDF is downloaded
+                    buttons.forEach(button => button.style.display = 'inline-block');
+                    userInfo.style.display = 'block';
+                });
         }
     </script>
+    
+    
 </body>
 </html>
