@@ -19,10 +19,13 @@ class LoginForm(AuthenticationForm):
 from .models import Portfolio, PortfolioElement
 from ckeditor.widgets import CKEditorWidget
 
+from django import forms
+from .models import Portfolio
+
 class PortfolioForm(forms.ModelForm):
     class Meta:
         model = Portfolio
-        fields = '__all__'
+        fields = ['title', 'description']  # Exclude the 'user' field
 
 class PortfolioElementForm(forms.ModelForm):
     content = forms.CharField(widget=CKEditorWidget())

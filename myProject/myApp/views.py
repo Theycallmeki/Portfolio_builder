@@ -83,7 +83,7 @@ def create_portfolio(request):
         form = PortfolioForm(request.POST)
         if form.is_valid():
             portfolio = form.save(commit=False)
-            portfolio.user = request.user  # Set the user to the currently logged-in user
+            portfolio.user = request.user  # Automatically set the logged-in user
             portfolio.save()
             return redirect('portfolio_list')  # Redirect to the portfolio list page
     else:
