@@ -90,10 +90,10 @@
     <div class="portfolio-container">
         {% if portfolios %}
             {% for portfolio in portfolios %}
-                <div class="portfolio-card">
+                <div class="portfolio-card" id="portfolio-{{ portfolio.id }}">
                     <h2>{{ portfolio.title }}</h2>
-                     <!-- Add your image here -->
-                    <div>{{ portfolio.description|safe }}</div>
+                    <div class="ckeditor-content">{{ portfolio.description|safe }}</div>
+                    <button class="edit-link" onclick="downloadPDF('{{ portfolio.id }}')">Download PDF</button>
                     <a href="{% url 'edit_portfolio' portfolio.id %}" class="edit-link">Edit</a>
                     <a href="{% url 'delete_portfolio' portfolio.id %}" class="delete-link" onclick="return confirm('Are you sure you want to delete this portfolio?');">Delete</a>
                 </div>
@@ -113,12 +113,84 @@
         <option value="{% url 'template_list' %}?template=5">Template 5</option>
     </select>
 
+    <!-- Include CKEditor script -->
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
+    <!-- Include html2pdf script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
     <script>
+        // Initialize CKEditor
+        CKEDITOR.replaceAll();
+
         function navigateToTemplate(selectElement) {
             const value = selectElement.value;
             if (value) {
                 window.location.href = value; // Redirect to the selected template URL
             }
+        }
+
+        function downloadPDF(portfolioId) {
+            // Get the CKEditor instance for the specific portfolio
+            const ckeditorInstance = CKEDITOR.instances['ckeditor-content-' + portfolioId];
+
+            // Update the content in the DOM from CKEditor
+            if (ckeditorInstance) {
+                document.getElementById('ckeditor-content-' + portfolioId).innerHTML = ckeditorInstance.getData();
+            }
+
+            // After updating the DOM, ensure that images are fully loaded before generating PDF
+            const element = document.getElementById('portfolio-' + portfolioId);
+            const images = element.querySelectorAll('img');
+
+            let loadedImagesCount = 0;
+            const totalImages = images.length;
+
+            // Wait for all images inside CKEditor content to load
+            images.forEach((image) => {
+                if (image.complete) {
+                    loadedImagesCount++;
+                } else {
+                    image.onload = () => {
+                        loadedImagesCount++;
+                        if (loadedImagesCount === totalImages) {
+                            generatePDF(portfolioId);
+                        }
+                    };
+                }
+            });
+
+            if (loadedImagesCount === totalImages) {
+                generatePDF(portfolioId);
+            }
+        }
+
+        function generatePDF(portfolioId) {
+            // Proceed with the PDF generation after images are fully loaded
+            var element = document.getElementById('portfolio-' + portfolioId);
+
+            var buttons = element.querySelectorAll('.edit-link, .delete-link');
+            buttons.forEach(button => button.style.display = 'none');
+
+            var opt = {
+                margin: 0,
+                filename: 'portfolio_' + portfolioId + '.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2, useCORS: true }, // useCORS for cross-origin images
+                jsPDF: {
+                    unit: 'px',
+                    format: [element.offsetWidth, element.offsetHeight],
+                    orientation: 'portrait'
+                }
+            };
+
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save()
+                .then(() => {
+                    buttons.forEach(button => button.style.display = 'inline-block');
+                });
         }
     </script>
 
