@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Portfolio</title>
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/adapters/jquery.js"></script>
+    <style>
+        .errorlist {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -34,8 +40,64 @@
     </div>
 
     <script>
-        // Initialize CKEditor for all textareas in the form
-        CKEDITOR.replaceAll();
+        // Custom file upload handler for CKEditor
+        function uploadImage(editor) {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = 'image/*';
+            fileInput.onchange = function() {
+                const file = fileInput.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        // Insert the image into the editor
+                        editor.insertHtml(`<img src="${e.target.result}" class="ck-image" style="max-width:100%; height:auto;" />`);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            fileInput.click();
+        }
+
+        // Initialize CKEditor for all textareas in the form with image upload and resize features
+        CKEDITOR.replaceAll('editor', {
+            extraPlugins: 'uploadimage',
+            filebrowserUploadUrl: '/upload/image', // Adjust according to your upload URL
+            filebrowserUploadMethod: 'form',
+            on: {
+                instanceReady: function(evt) {
+                    // Create a custom button for image upload
+                    const editor = evt.editor;
+                    editor.ui.addButton('ImageUpload', {
+                        label: 'Upload Image',
+                        command: 'uploadImage',
+                        toolbar: 'insert',
+                    });
+
+                    editor.addCommand('uploadImage', {
+                        exec: function(editor) {
+                            uploadImage(editor);
+                        }
+                    });
+                }
+            },
+        });
+
+        // Allow image resizing
+        CKEDITOR.on('dialogDefinition', function(ev) {
+            const dialogName = ev.data.name;
+            const dialogDefinition = ev.data.definition;
+
+            if (dialogName === 'image') {
+                const infoTab = dialogDefinition.getContents('info');
+                infoTab.onHide = function() {
+                    const imageElement = ev.data.dialog.getContentElement('info', 'src');
+                    if (imageElement) {
+                        imageElement.setValue('');
+                    }
+                };
+            }
+        });
     </script>
 </body>
 </html>

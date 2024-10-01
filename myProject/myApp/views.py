@@ -237,18 +237,24 @@ def Template2CreateView(request):
     if request.method == 'POST':
         form = AboutMeForm(request.POST, request.FILES)  # Handle form submission
         if form.is_valid():
-            Aboutme = form.save(commit=False)  # Create the object but don't save yet
-            Aboutme.user = request.user  # Assign the logged-in user to the object
-            Aboutme.save()  # Save the object
+            aboutme = form.save(commit=False)  # Create the object but don't save yet
+            aboutme.user = request.user  # Assign the logged-in user to the object
+
+            # Set the category to "Template1"
+            template2_category = Category.objects.get(type='template2')
+            aboutme.category = template2_category  # Assign the category
+
+            aboutme.save()  # Save the object
             return redirect('main')  # Redirect to the desired page after saving
     else:
         form = AboutMeForm()  # Create a new form instance for GET requests
 
-    return render(request, 'myApp/temp2/template2.html', {'form': form})
+    return render(request, 'myApp/temp2/template2.html', {'form': form})  # R
 
-@login_required
 def template2_list(request):
-    about_me_profiles = AboutMe.objects.filter(user=request.user)
+    # Filter profiles by the logged-in user and the specified category
+    template2_category = Category.objects.get(type='template2')
+    about_me_profiles = AboutMe.objects.filter(user=request.user, category=template2_category)
     print(about_me_profiles)  # Check the filtered profiles in your console
 
     return render(request, 'myApp/temp2/savedTemplate2.html', {
@@ -256,5 +262,31 @@ def template2_list(request):
     })
 
 
+
+
+@login_required
+def Template3CreateView(request):
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES)  
+        if form.is_valid():
+            aboutme = form.save(commit=False)  
+            aboutme.user = request.user 
+            template3_category = Category.objects.get(type='template3')
+            aboutme.category = template3_category  
+            aboutme.save()  
+            return redirect('main')  
+    else:
+        form = AboutMeForm()  
+
+    return render(request, 'myApp/temp3/template3.html', {'form': form})  
+
+def template3_list(request):
+    template3_category = Category.objects.get(type='template3')
+    about_me_profiles = AboutMe.objects.filter(user=request.user, category=template3_category)
+    print(about_me_profiles) 
+    
+    return render(request, 'myApp/temp3/savedTemplate3.html', {
+        'templates': about_me_profiles
+    })
 
 

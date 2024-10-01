@@ -26,6 +26,9 @@ urlpatterns = [
 
     path('template2_create/', views.Template2CreateView, name='template2_create'),
     path('saved_template2/', views.template2_list, name='template2_list'),
+    
+    path('template3_create/', views.Template3CreateView, name='template3_create'),
+    path('saved_template3/', views.template3_list, name='template3_list'),
 
 
 
