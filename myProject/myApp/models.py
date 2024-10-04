@@ -35,14 +35,15 @@ class Category(models.Model):
 
 class AboutMe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='about_me', null=True)
+    name = models.CharField(max_length=100, null=True)  # Allow null values
     image = models.ImageField(upload_to='media/')
     description = models.CharField(max_length=200)
     background_nationality = models.CharField(max_length=100)
     background_hometown = models.CharField(max_length=100)
-    background_languages = models.CharField(max_length=255)  # Comma-separated languages
-    skills = models.CharField(max_length=255)  # Comma-separated skills
-    education = models.CharField(max_length=255)  # Comma-separated education details
-    experience = models.TextField()  # A detailed text field for experience
+    background_languages = models.CharField(max_length=255)  
+    skills = models.CharField(max_length=255)  
+    education = models.CharField(max_length=255)  
+    experience = models.TextField()  
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='about_me_categories', null=True)
 
     def __str__(self):

@@ -67,6 +67,7 @@ class AboutMeForm(forms.ModelForm):
         model = AboutMe
         fields = [
             'image',
+            'name',
             'description',
             'background_nationality',
             'background_hometown',

@@ -3,125 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Me List</title>
+    <title>Template 2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        /* Base Styles */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            font-family: 'Poppins', 'Roboto', Arial, sans-serif;
+            background: linear-gradient(to right, #fbfbfb, #fefefe);
             margin: 0;
-            padding: 20px;
+            padding: 2rem;
+            color: #333;
+            line-height: 1.6;
         }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15rem;
+            font-weight: 600;
+        }
+        
+        /* Portfolio Container */
         .portfolio-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 2rem;
             justify-content: center;
+            padding: 0 1rem;
         }
+
+        /* Portfolio Card */
         .portfolio-card {
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            width: 300px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex; /* Use flexbox to layout children */
+            flex-direction: column; /* Stack children vertically */
+            justify-content: space-between; /* Space out left and right sections */
+            background-color: rgba(255, 255, 255, 0.85);
+            border: 1px solid #56546d;
+            border-radius: 0.75rem;
+            padding: 2.5rem;
+            width: 22rem;
+            box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            text-align: left; /* Align text to the left */
+            position: relative;
+            overflow: hidden;
         }
-        .portfolio-card h2 {
-            font-size: 1.5em;
-            margin: 0 0 10px;
+
+        .section {
+            display: flex; /* Use flexbox for left and right sections */
+            justify-content: space-between; /* Space between sections */
+            flex: 1; /* Allow them to take available space */
         }
+
+        .left-section {
+            flex: 1; /* Allow left section to take available space */
+        }
+
+        .right-section {
+            flex: 1; /* Allow right section to take available space */
+        }
+
+        hr {
+            border: none; /* Remove default styling */
+            border-top: 1px solid #dcdbe7; /* Add a top border */
+            margin: 1rem 0; /* Add spacing around the hr */
+            }
+
+        .profile-image {
+            width: 8rem;
+            height: 8rem;
+            object-fit: cover;
+            margin-bottom: 1.75rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            border-style: solid;
+            border-color: #dcdbe7;
+            border-width: 0.3rem;
+        }
+
+        .details {
+            margin-top: 1rem; /* Add space above details */
+        }
+
+        .details p {
+            margin: 0.5rem 0; /* Consistent spacing between details */
+        }
+        
         .portfolio-card p {
-            font-size: 1em;
-            color: #555;
+            background-color: #dcdbe7; /* Semi-transparent white */
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem; /* Adds some space between paragraphs */
         }
-        .portfolio-card img {
-            width: 100px;
-            height: auto;
-            margin-bottom: 10px;
+        
+        .portfolio-card:hover {
+            transform: translateY(-0.75rem);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.9);
         }
+        
+        .portfolio-card:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(0, 123, 255, 0.15), transparent 60%);
+            transform: scale(0);
+            transition: transform 0.5s ease;
+            border-radius: 50%;
+        }
+        
+        .portfolio-card:hover:before {
+            transform: scale(1);
+        }
+        
+        .portfolio-card h2 {
+            font-size: 1.9rem;
+            margin-bottom: 1.25rem;
+            color: #444;
+            text-transform: capitalize;
+            font-weight: 600;
+        }
+        
+        .portfolio-card p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+        
+        /* Details Section */
+        .details {
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.5; /* Increase line height for better readability */
+        }
+        
+        .details p {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .details strong {
+            margin-left: 0.5rem; /* Added a margin for better alignment between icon and text */
+        }
+        
+        .details i {
+            margin-right: 0.75rem; /* Icons have some spacing between them and the text */
+            color: #007BFF; /* Icon color, matching buttons */
+            font-size: 1rem;
+        }
+        
+        /* Button Container */
         .button-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            align-items: center;
+            margin-top: auto; /* Push the button container to the bottom */
         }
+        
+        /* Buttons */
         .btn {
             background-color: #007BFF;
-            color: white;
-            padding: 10px 15px;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 0.375rem;
             cursor: pointer;
             text-decoration: none;
             text-align: center;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+            font-size: 1rem;
+            font-weight: 500;
+            flex: 1;
+            margin: 0 0.5rem;
+            position: relative;
         }
+        
+        .btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            transform: translateY(-0.15rem);
+        }
+        
         .btn-delete {
             background-color: #dc3545;
         }
-
-        .resume-section {
-    margin-bottom: 20px; /* Space between sections */
-}
-
-.resume-section h3 {
-    font-size: 1.3em; /* Section title size */
-    margin-bottom: 5px; /* Space below the section title */
-    color: #333; /* Darker color for better readability */
-    border-bottom: 2px solid brown; /* Underline effect for section titles */
-    padding-bottom: 5px; /* Space below the underline */
-}
-
-.resume-section p {
-    font-size: 1em; /* Regular text size */
-    color: #555; /* Text color */
-    margin: 5px 0; /* Space between paragraphs */
-}
-
-.resume-section strong {
-    color: brown; /* Emphasize labels */
-}
-
+        
+        .btn-delete:hover {
+            background-color: #811212;
+        }
+        
+        /* Icons in Details */
+        .fa-solid, .fas {
+            color: #007bff; /* Ensuring all icons match the theme */
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .portfolio-card {
+                width: 100%;
+                margin-bottom: 2rem;
+            }
+        
+            .button-container {
+                flex-direction: column;
+            }
+        
+            .btn {
+                margin: 0.5rem 0;
+                width: 100%;
+            }
+        }
+        
+        /* Accessibility */
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.1875rem rgba(0, 123, 255, 0.5);
+        }
+        
+        .btn-delete:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.1875rem rgba(220, 53, 69, 0.5);
+        }
     </style>
 </head>
 
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Saved Templatsses</h1>
+    <h1>Saved Templates</h1>
     <div class="portfolio-container">
         {% for profile in templates %}
         <div class="portfolio-card" id="profile-{{ profile.id }}">
-            <h2>{{ profile.user.username }}</h2>
-            <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
-            
-            <div class="resume-section">
-                <h3>Description</h3>
-                <p>{{ profile.description }}</p>
+            <div class="section">
+                <div class="left-section">
+                    <img class="profile-image" id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
+                    
+                
+
+                    <div class="details">
+                        <p><i class="fa-solid fa-flag"></i> <strong>Name</strong></p>
+                        <h6>{{ profile.name }}</h6><hr>
+                        <p><i class="fa-solid fa-flag"></i> <strong>Nationality</strong></p>
+                        <h6>{{ profile.background_nationality }}</h6><hr>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>Hometown</strong></p>
+                        <h6>{{ profile.background_hometown }}</h6><hr>
+                        <p><i class="fas fa-language"></i> <strong>Languages</strong></p>
+                        <h6>{{ profile.background_languages }}</h6>
+                    </div>
+                </div>
+                <div class="right-section">
+                    <p><i class="fas fa-tools"></i> <strong>Skills</strong></p>
+                    <h6>{{ profile.skills }}</h6><hr>
+                    <p><i class="fas fa-graduation-cap"></i> <strong>Education</strong></p>
+                    <h6>{{ profile.education }}</h6><hr>
+                    <p><i class="fas fa-briefcase"></i> <strong>Experience</strong></p>
+                    <h6>{{ profile.experience }}</h6>
+                </div>
             </div>
-            
-            <div class="resume-section">
-                <h3>Background</h3>
-                <p><strong>Nationality:</strong> {{ profile.background_nationality }}</p>
-                <p><strong>Hometown:</strong> {{ profile.background_hometown }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Languages</h3>
-                <p>{{ profile.background_languages }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Skills</h3>
-                <p>{{ profile.skills }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Education</h3>
-                <p>{{ profile.education }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Experience</h3>
-                <p>{{ profile.experience }}</p>
-            </div>
-            
             <div class="button-container">
                 <a href="{% url 'template2-edit' profile.id %}" class="btn">Edit</a>
                 <form action="{% url 'template2-delete' profile.id %}" method="POST" style="display:inline;">
@@ -131,12 +277,11 @@
                 <button class="btn" onclick="downloadPDF('{{ profile.id }}')">Download</button>
             </div>
         </div>
-        
         {% empty %}
             <div class="portfolio-card">No profiles available.</div>
         {% endfor %}
-    </div>
-
+    </div>    
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
 
     <script>
@@ -149,7 +294,8 @@
             var userInfo = element.querySelector('h2');
             
             buttons.forEach(button => button.style.display = 'none');
-            userInfo.style.display = 'none';
+            var originalBorder = element.style.border;
+            element.style.border = 'none';
     
             // PDF options to ensure it fills the entire page
             var opt = {
@@ -173,10 +319,9 @@
                     // Show the hidden elements again after PDF is downloaded
                     buttons.forEach(button => button.style.display = 'inline-block');
                     userInfo.style.display = 'block';
+                    element.style.border = originalBorder;
                 });
         }
     </script>
-    
-    
 </body>
 </html>
