@@ -123,6 +123,8 @@
             {% endif %}
             <li><a href="{% url 'contact' %}">Contact</a></li>
             <li><a href="{% url 'portfolio_list' %}">Profile</a></li>
+            <!-- Go Back Button as a nav item -->
+            <li id="goBackNav"><a href="#" onclick="goBack()">Go Back</a></li>
         </ul>
     </nav>
 </header>
@@ -131,6 +133,18 @@
     function toggleMenu() {
         const navbar = document.getElementById('navbar');
         navbar.classList.toggle('active');
+    }
+
+    // JavaScript to hide the Go Back nav item on /main
+    window.onload = function() {
+        const goBackNav = document.getElementById('goBackNav');
+        if (window.location.pathname === '/main/') {
+            goBackNav.style.display = 'none';
+        }
+    };
+
+    function goBack() {
+        window.history.back(); // Navigate to the previous page
     }
 </script>
 

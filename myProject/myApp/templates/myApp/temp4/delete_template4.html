@@ -1,0 +1,51 @@
+<!-- delete_portfolio.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .delete-container {
+            max-width: 400px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        button {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="delete-container">
+        <h1>Delete Portfolio Item</h1>
+        <p>Are you sure you want to delete the portfolio titled "<strong>{{ portfolio.title }}</strong>"?</p>
+        
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit">Yes, delete it</button>
+        </form>
+        <a href="{% url 'portfolio_list' %}">Cancel</a>
+    </div>
+</body>
+</html>

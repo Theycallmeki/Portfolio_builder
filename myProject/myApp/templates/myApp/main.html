@@ -64,18 +64,21 @@
         }
 
         .btn-select {
-            background-color: #ff7f50;
-            color: #fff;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+    background-color: #ff7f50;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Ensure it behaves like a button */
+    text-align: center; /* Center text inside the button */
+}
 
-        .btn-select:hover {
-            background-color: #e67044;
-        }
+.btn-select:hover {
+    background-color: #e67044;
+}
 
         footer {
             margin-top: 30px;
@@ -88,33 +91,53 @@
     <header>
         <h1>Choose a Portfolio Template</h1>
         {% include 'components/navbar.html' %}
-
     </header>
 
     <div class="template-container">
+        <!-- Create your own template first -->
+        <div class="template-card">
+            <h3>Create Your Own</h3>
+            <p>Design a custom portfolio from scratch.</p>
+            <button class="btn-select" onclick="window.location='{% url 'create_portfolio' %}'">Create</button>
+        </div>
+
+        <!-- Template 1 -->
         <div class="template-card">
             <h3>Template 1</h3>
             <p>A clean and modern design for your portfolio.</p>
             <a href="{% url 'template1_create' %}" class="btn-select">Select Template</a>
         </div>
 
+        <!-- Template 2 -->
         <div class="template-card">
             <h3>Template 2</h3>
-            <p>An artistic layout perfect for creativessddsdsdsd.</p>
+            <p>An artistic layout perfect for creatives.</p>
             <a href="{% url 'template2_create' %}" class="btn-select">Select Template</a>
          </div>
 
+        <!-- Template 3 -->
         <div class="template-card">
             <h3>Template 3</h3>
             <p>A minimalistic approach to showcase your work.</p>
             <a href="{% url 'template3_create' %}" class="btn-select">Select Template</a>
         </div>
 
+        <!-- Template 4 -->
         <div class="template-card">
-            <h3>Make your own</h3>
+            <h3>Template 4</h3>
             <p>A professional layout for freelancers and agencies.</p>
-            <button class="btn-select" onclick="window.location='{% url 'create_portfolio' %}'">Create</button>
+            <a href="{% url 'template4_create' %}" class="btn-select">Select Template</a>
         </div>
+
+        <!-- Template 5 -->
+        <div class="template-card">
+            <h3>Template 5</h3>
+            <p>A bold and creative design to impress potential clients.</p>
+            <a href="{% url 'template5_create' %}" class="btn-select">Select Template</a>
+        </div>
+
+        <!-- Template 6 -->
+        
     </div>
 
     <footer>

@@ -183,7 +183,7 @@ def Template1CreateView(request):
             aboutme.category = template1_category  # Assign the category
 
             aboutme.save()  # Save the object
-            return redirect('main')  # Redirect to the desired page after saving
+            return redirect('template_list')  # Redirect to the desired page after saving
     else:
         form = AboutMeForm()  # Create a new form instance for GET requests
 
@@ -221,6 +221,7 @@ from .models import AboutMe
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import AboutMe
+@login_required
 def template1_list(request):
     # Filter profiles by the logged-in user and the specified category
     template1_category = Category.objects.get(type='template1')
@@ -245,12 +246,12 @@ def Template2CreateView(request):
             aboutme.category = template2_category  # Assign the category
 
             aboutme.save()  # Save the object
-            return redirect('main')  # Redirect to the desired page after saving
+            return redirect('template2_list')  # Redirect to the desired page after saving
     else:
         form = AboutMeForm()  # Create a new form instance for GET requests
 
     return render(request, 'myApp/temp2/template2.html', {'form': form})  # R
-
+@login_required
 def template2_list(request):
     # Filter profiles by the logged-in user and the specified category
     template2_category = Category.objects.get(type='template2')
@@ -260,6 +261,28 @@ def template2_list(request):
     return render(request, 'myApp/temp2/savedTemplate2.html', {
         'templates': about_me_profiles
     })
+
+@login_required
+def Template2EditView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES, instance=about_me)
+        if form.is_valid():
+            form.save()
+            return redirect('template2_list')
+    else:
+        form = AboutMeForm(instance=about_me)
+
+    return render(request, 'myApp/temp2/edit_template2.html', {'form': form})
+
+@login_required
+def Template2DeleteView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        about_me.delete()
+        return redirect('main')
+
+    return render(request, 'myApp/temp2/savedTemplate2.html', {'about_me': about_me})
 
 
 
@@ -274,12 +297,12 @@ def Template3CreateView(request):
             template3_category = Category.objects.get(type='template3')
             aboutme.category = template3_category  
             aboutme.save()  
-            return redirect('main')  
+            return redirect('template3_list')  
     else:
         form = AboutMeForm()  
 
     return render(request, 'myApp/temp3/template3.html', {'form': form})  
-
+@login_required
 def template3_list(request):
     template3_category = Category.objects.get(type='template3')
     about_me_profiles = AboutMe.objects.filter(user=request.user, category=template3_category)
@@ -289,4 +312,128 @@ def template3_list(request):
         'templates': about_me_profiles
     })
 
+
+@login_required
+def Template3EditView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES, instance=about_me)
+        if form.is_valid():
+            form.save()
+            return redirect('template3_list')
+    else:
+        form = AboutMeForm(instance=about_me)
+
+    return render(request, 'myApp/temp3/edit_template3.html', {'form': form})
+
+@login_required
+def Template3DeleteView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        about_me.delete()
+        return redirect('main')
+
+    return render(request, 'myApp/temp3/savedTemplate3.html', {'about_me': about_me})
+
+
+
+
+@login_required
+def Template4CreateView(request):
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES)  
+        if form.is_valid():
+            aboutme = form.save(commit=False)  
+            aboutme.user = request.user 
+            template3_category = Category.objects.get(type='template4')
+            aboutme.category = template3_category  
+            aboutme.save()  
+            return redirect('template4_list')  
+    else:
+        form = AboutMeForm()  
+
+    return render(request, 'myApp/temp4/template4.html', {'form': form})  
+@login_required
+def template4_list(request):
+    template3_category = Category.objects.get(type='template4')
+    about_me_profiles = AboutMe.objects.filter(user=request.user, category=template3_category)
+    print(about_me_profiles) 
+    
+    return render(request, 'myApp/temp4/savedTemplate4.html', {
+        'templates': about_me_profiles
+    })
+
+
+
+@login_required
+def Template4EditView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES, instance=about_me)
+        if form.is_valid():
+            form.save()
+            return redirect('template4_list')
+    else:
+        form = AboutMeForm(instance=about_me)
+
+    return render(request, 'myApp/temp4/edit_template4.html', {'form': form})
+
+@login_required
+def Template4DeleteView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        about_me.delete()
+        return redirect('main')
+
+    return render(request, 'myApp/temp4/savedTemplate4.html', {'about_me': about_me})
+
+
+@login_required
+def Template5CreateView(request):
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES)  
+        if form.is_valid():
+            aboutme = form.save(commit=False)  
+            aboutme.user = request.user 
+            template3_category = Category.objects.get(type='template5')
+            aboutme.category = template3_category  
+            aboutme.save()  
+            return redirect('template5_list')  
+    else:
+        form = AboutMeForm()  
+
+    return render(request, 'myApp/temp5/template5.html', {'form': form})  
+@login_required
+def template5_list(request):
+    template3_category = Category.objects.get(type='template5')
+    about_me_profiles = AboutMe.objects.filter(user=request.user, category=template3_category)
+    print(about_me_profiles) 
+    
+    return render(request, 'myApp/temp5/savedTemplate5.html', {
+        'templates': about_me_profiles
+    })
+
+
+
+@login_required
+def Template5EditView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = AboutMeForm(request.POST, request.FILES, instance=about_me)
+        if form.is_valid():
+            form.save()
+            return redirect('template5_list')
+    else:
+        form = AboutMeForm(instance=about_me)
+
+    return render(request, 'myApp/temp5/edit_template5.html', {'form': form})
+
+@login_required
+def Template5DeleteView(request, pk):
+    about_me = get_object_or_404(AboutMe, pk=pk, user=request.user)
+    if request.method == 'POST':
+        about_me.delete()
+        return redirect('main')
+
+    return render(request, 'myApp/temp5/savedTemplate5.html', {'about_me': about_me})
 

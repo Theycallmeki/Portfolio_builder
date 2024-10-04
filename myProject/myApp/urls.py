@@ -26,9 +26,25 @@ urlpatterns = [
 
     path('template2_create/', views.Template2CreateView, name='template2_create'),
     path('saved_template2/', views.template2_list, name='template2_list'),
+    path('edit/<int:pk>/template2', views.Template2EditView, name='template2-edit'),
+    path('delete/<int:pk>/template2', views.Template2DeleteView, name='template2-delete'),
     
     path('template3_create/', views.Template3CreateView, name='template3_create'),
     path('saved_template3/', views.template3_list, name='template3_list'),
+    path('edit/<int:pk>/template3', views.Template3EditView, name='template3-edit'),
+    path('delete/<int:pk>/template3', views.Template3DeleteView, name='template3-delete'),
+
+    path('template4_create/', views.Template4CreateView, name='template4_create'),
+    path('saved_template4/', views.template4_list, name='template4_list'),
+    path('edit/<int:pk>/template4', views.Template4EditView, name='template4-edit'),
+    path('delete/<int:pk>/template4', views.Template4DeleteView, name='template4-delete'),
+
+    path('template5_create/', views.Template5CreateView, name='template5_create'),
+    path('saved_template5/', views.template5_list, name='template5_list'),
+    path('edit/<int:pk>/template5', views.Template5EditView, name='template5-edit'),
+    path('delete/<int:pk>/template5', views.Template5DeleteView, name='template5-delete'),
+
+
 
 
 
