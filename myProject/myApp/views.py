@@ -16,6 +16,20 @@ def contact(request):
 
     return render(request, 'components/contact.html')
 
+def about(request):
+    context={}
+
+    return render(request, 'components/about.html')
+
+def privacy_policy(request):
+    context={}
+
+    return render(request, 'components/privacy_policy.html')
+
+def terms_and_conditions(request):
+    context={}
+
+    return render(request, 'components/terms_and_conditions.html')
 
 def main(request):
     context={}
@@ -51,6 +65,11 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'myApp/register.html', {'form': form})
 
+from django.contrib import messages
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from .forms import LoginForm  # Ensure you import your LoginForm
+
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -58,13 +77,17 @@ def user_login(request):
             user = form.get_user()
             login(request, user)
             return redirect('main')  # Redirect to a home page after login
+        else:
+            # Add an error message if the form is not valid
+            messages.error(request, "Invalid username or password.")
     else:
         form = LoginForm()
+    
     return render(request, 'myApp/login.html', {'form': form})
 
 def user_logout(request):
     logout(request)  # Log out the user
-    return redirect('home') 
+    return redirect('login') 
 
 
 

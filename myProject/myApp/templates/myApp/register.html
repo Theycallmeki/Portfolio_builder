@@ -16,34 +16,32 @@
         }
         body {
             display: flex;
+            flex-direction: column; /* Align items vertically */
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #060c21;
+            background: #ffffff;
+        }
+        .logo {
+            font-size: 32px; /* Adjust logo size */
+            color: #007bff; /* Logo color */
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 20px; /* Space below the logo */
+            text-align: center; /* Center align */
+            margin-top: 40px; /* Space from the top */
         }
         .form {
             position: relative;
-            background: #060c21;
+            background: #ffffff;
             border: 1px solid #000;
             width: 350px;
             padding: 40px 40px 60px;
             border-radius: 10px;
             text-align: center;
         }
-        .form::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            bottom: -2px;
-            left: -2px;
-            background: linear-gradient(315deg,#e91e63,#5d02ff);
-            z-index: -1;
-            transform: skew(2deg,1deg);
-            border-radius: 10px;
-        }
         .form h2 {
-            color: #fff;
+            color: #000;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 5px;
@@ -57,7 +55,7 @@
         }
         .form .input .inputBox label {
             display: block;
-            color: #fff;
+            color: #000;
             margin-bottom: 5px;
             font-size: 18px;
             letter-spacing: 1px;
@@ -65,64 +63,135 @@
         .form .input .inputBox input {
             width: 100%;
             height: 40px;
-            border: none;
+            border: 1px solid #000;
             outline: none;
             padding: 5px 15px;
-            background: linear-gradient(315deg,#e91e63,#5d02ff);
-            color: #fff;
+            background: #ffffff;
+            color: #000;
             font-size: 18px;
             border-radius: 10px;
+        }
+        .form .input .inputBox p {
+            color: #e91e63;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none; /* Initially hidden */
         }
         .form .input .inputBox input[type="submit"] {
             cursor: pointer;
             margin-top: 20px;
             letter-spacing: 1px;
+            background: #007bff;
+            color: #fff;
         }
         .form .input .inputBox input[type="submit"]:hover {
-            background: linear-gradient(315deg,#5d02ff,#e91e63);
+            background: #0056b3;
         }
         .form .input .inputBox input[type="submit"]:active {
-            color: rgba(255, 255, 255, 0.521);
-            background: linear-gradient(315deg,#e91e6271,#5f02ff8c);
+            background: #003f7f;
+            color: #fff;
         }
-        .form p {
-            color: purple;
-            font-size: 14px;
-            margin-top: 5px;
+        .form .redirect-login {
+            margin-top: 20px;
+        }
+        .form .redirect-login button {
+            background-color: transparent;
+            border: none;
+            color: #007bff;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .form .redirect-login button:hover {
+            color: #0056b3;
         }
     </style>
 </head>
 <body>
+    <div class="logo">Build-A-Porty</div> <!-- Logo added here -->
     <div class="form">
         <h2>Register</h2>
-        <form method="POST">
+        <form id="registerForm" method="POST">
             {% csrf_token %}
             <div class="input">
                 <div class="inputBox">
                     <label for="username">Username</label>
-                    {{ form.username }}
-                    <p>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+                    <input type="text" name="username" id="username" required>
+                    <p class="error" id="usernameError">Username is required and must be 150 characters or fewer.</p>
                 </div>
                 <div class="inputBox">
                     <label for="email">Email</label>
-                    {{ form.email }}
+                    <input type="email" name="email" id="email" required>
+                    <p class="error" id="emailError">Please enter a valid email address.</p>
                 </div>
                 <div class="inputBox">
                     <label for="password1">Password</label>
-                    {{ form.password1 }}
-                    <p>Your password must contain at least 8 characters and can't be too similar to your personal information.</p>
-                    <p>It can't be a commonly used password or entirely numeric.</p>
+                    <input type="password" name="password1" id="password1" required>
+                    <p class="error" id="password1Error">Password must be at least 8 characters long.</p>
                 </div>
                 <div class="inputBox">
                     <label for="password2">Password confirmation</label>
-                    {{ form.password2 }}
-                    <p>Enter the same password as before, for verification.</p>
+                    <input type="password" name="password2" id="password2" required>
+                    <p class="error" id="password2Error">Passwords do not match.</p>
                 </div>
                 <div class="inputBox">
                     <input type="submit" value="Register">
                 </div>
             </div>
         </form>
+        <!-- Button to redirect to login page -->
+        <div class="redirect-login">
+            <p>Already have an account?</p>
+            <button onclick="window.location.href='http://127.0.0.1:8000/login/'">Sign in here</button>
+        </div>
     </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            let isValid = true;
+
+            // Get form elements
+            const username = document.getElementById('username');
+            const email = document.getElementById('email');
+            const password1 = document.getElementById('password1');
+            const password2 = document.getElementById('password2');
+
+            // Clear previous errors
+            document.getElementById('usernameError').style.display = 'none';
+            document.getElementById('emailError').style.display = 'none';
+            document.getElementById('password1Error').style.display = 'none';
+            document.getElementById('password2Error').style.display = 'none';
+
+            // Username validation
+            if (username.value.length === 0 || username.value.length > 150) {
+                document.getElementById('usernameError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email.value)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            // Password validation
+            if (password1.value.length < 8) {
+                document.getElementById('password1Error').style.display = 'block';
+                isValid = false;
+            }
+
+            // Password confirmation validation
+            if (password1.value !== password2.value) {
+                document.getElementById('password2Error').style.display = 'block';
+                isValid = false;
+            }
+
+            // Prevent form submission if validation fails
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>

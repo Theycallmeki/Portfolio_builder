@@ -1,159 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Builder</title>                 
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio Builder</title>
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            padding-top: 60px; /* Adjust padding to prevent content from hiding behind the navbar */
-        }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        padding-top: 60px; /* Adjust padding to prevent content from hiding behind the navbar */
+      }
 
-        header {
-            background-color: grey;
-            position: fixed; /* Make the navbar fixed */
-            top: 0; /* Stick to the top */
-            left: 0;
-            right: 0; /* Full width */
-            height: 60px; /* Fixed height */
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 1000; /* Ensure it stays above other content */
-        }
+      header {
+        background-color: #007bff; /* Navbar background color */
+        position: fixed; /* Make the navbar fixed */
+        top: 0; /* Stick to the top */
+        left: 0;
+        right: 0; /* Full width */
+        height: 60px; /* Fixed height */
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 1000; /* Ensure it stays above other content */
+      }
 
-        nav {
-            width: 100%; /* Full width of the header */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+      nav {
+        width: 100%; /* Full width of the header */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-        nav h1 {
-            color: white;
-            margin: 0;
-        }
+      nav h1 {
+        color: white;
+        margin: 0;
+      }
 
+      nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+      }
+
+      nav ul li {
+        margin-left: 20px;
+      }
+
+      nav ul li a {
+        text-decoration: none;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+      }
+
+      nav ul li a:hover,
+      nav ul li a.active {
+        background-color: orange;
+        color: black; /* Optional: change text color when active */
+      }
+
+      /* Hamburger menu styles */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .hamburger div {
+        width: 25px;
+        height: 3px;
+        background-color: white;
+        margin: 4px;
+        transition: 0.3s;
+      }
+
+      /* Responsive styles */
+      @media (max-width: 768px) {
         nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
+          display: none; /* Hide menu by default */
+          flex-direction: column; /* Stack items */
+          position: absolute;
+          background-color: grey;
+          top: 60px; /* Adjust to be below the fixed navbar */
+          right: 20px;
+          border-radius: 5px;
+          width: 200px; /* Set width */
+        }
+
+        nav ul.active {
+          display: flex; /* Show menu when active */
         }
 
         nav ul li {
-            margin-left: 20px;
+          margin: 10px 0; /* Adjust spacing */
         }
 
-        nav ul li a {
-            text-decoration: none;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        nav ul li a:hover,
-        nav ul li a.active {
-            background-color: orange;
-            color: black; /* Optional: change text color when active */
-        }
-
-        /* Hamburger menu styles */
         .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
+          display: flex; /* Show hamburger menu */
         }
-
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background-color: white;
-            margin: 4px;
-            transition: 0.3s;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            nav ul {
-                display: none; /* Hide menu by default */
-                flex-direction: column; /* Stack items */
-                position: absolute;
-                background-color: grey;
-                top: 60px; /* Adjust to be below the fixed navbar */
-                right: 20px;
-                border-radius: 5px;
-                width: 200px; /* Set width */
-            }
-
-            nav ul.active {
-                display: flex; /* Show menu when active */
-            }
-
-            nav ul li {
-                margin: 10px 0; /* Adjust spacing */
-            }
-
-            .hamburger {
-                display: flex; /* Show hamburger menu */
-            }
-        }
+      }
     </style>
-</head>
-<body>
-
-<header>
-    <nav>
-        <h1>Portfolio Builder</h1>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <h1><a href="{% url 'main' %}" style="color: white; text-decoration: none;">Build-A-Porty</a></h1>
         <div class="hamburger" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
         <ul id="navbar">
-            <li><a href="{% url 'main' %}">Home</a></li>
-            <li><a href="#">About</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
+            <!-- <li><a href="{% url 'main' %}">Home</a></li> -->
+            {% if request.path != '/login/' %}
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                {% endif %}
             {% endif %}
-            <li><a href="{% url 'contact' %}">Contact</a></li>
             <li><a href="{% url 'portfolio_list' %}">Profile</a></li>
-            <!-- Go Back Button as a nav item -->
-            <li id="goBackNav"><a href="#" onclick="goBack()">Go Back</a></li>
         </ul>
-    </nav>
-</header>
+      </nav>
+    </header>
 
-<script>
-    function toggleMenu() {
-        const navbar = document.getElementById('navbar');
-        navbar.classList.toggle('active');
-    }
+    <script>
+      function toggleMenu() {
+        const navbar = document.getElementById("navbar");
+        navbar.classList.toggle("active");
+      }
 
-    // JavaScript to hide the Go Back nav item on /main
-    window.onload = function() {
-        const goBackNav = document.getElementById('goBackNav');
-        if (window.location.pathname === '/main/') {
-            goBackNav.style.display = 'none';
+      // JavaScript to hide the Go Back nav item on /main
+      window.onload = function () {
+        const goBackNav = document.getElementById("goBackNav");
+        if (window.location.pathname === "/main/") {
+          goBackNav.style.display = "none";
         }
-    };
+      };
 
-    function goBack() {
+      function goBack() {
         window.history.back(); // Navigate to the previous page
-    }
-</script>
+      }
+    </script>
 
-<!-- Page Content Starts Here -->
-<div>
-    <!-- Add your page content here -->
-    <h1>Welcome to the Portfolio Builder</h1>
+    <!-- Page Content Starts Here -->
 
-</div>
-
-</body>
+  </body>
 </html>

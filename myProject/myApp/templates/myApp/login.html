@@ -16,34 +16,30 @@
         }
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: #060c21;
+            background: #ffffff;
+        }
+        .logo {
+            font-size: 48px; /* Size of the logo */
+            color: #007bff; /* Color of the logo */
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 20px; /* Space between logo and form */
         }
         .form {
             position: relative;
-            background: #060c21;
+            background: #ffffff;
             border: 1px solid #000;
             width: 350px;
             padding: 40px 40px 60px;
             border-radius: 10px;
             text-align: center;
         }
-        .form::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            bottom: -2px;
-            left: -2px;
-            background: linear-gradient(315deg,#e91e63,#5d02ff);
-            z-index: -1;
-            transform: skew(2deg,1deg);
-            border-radius: 10px;
-        }
         .form h2 {
-            color: #fff;
+            color: #000;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 5px;
@@ -57,7 +53,7 @@
         }
         .form .input .inputBox label {
             display: block;
-            color: #fff;
+            color: #000;
             margin-bottom: 5px;
             font-size: 18px;
             letter-spacing: 1px;
@@ -66,11 +62,11 @@
             position: relative;
             width: 100%;
             height: 40px;
-            border: none;
+            border: 1px solid #000;
             outline: none;
             padding: 5px 15px;
-            background: linear-gradient(315deg,#e91e63,#5d02ff);
-            color: #fff;
+            background: #ffffff;
+            color: #000;
             font-size: 18px;
             border-radius: 10px;
         }
@@ -78,19 +74,42 @@
             cursor: pointer;
             margin-top: 20px;
             letter-spacing: 1px;
+            background: #007bff;
+            color: #fff;
         }
         .form .input .inputBox input[type="submit"]:hover {
-            background: linear-gradient(315deg,#5d02ff,#e91e63);
+            background: #0056b3;
         }
         .form .input .inputBox input[type="submit"]:active {
-            color: rgba(255, 255, 255, 0.521);
-            background: linear-gradient(315deg,#e91e6271,#5f02ff8c);
+            background: #003f7f;
+            color: #fff;
+        }
+        .form .error-message {
+            color: #e91e63; /* Error message color */
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .form .register-link {
+            margin-top: 20px;
+        }
+        .form .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form .register-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <div class="logo">Build-A-Porty</div> <!-- Logo text -->
     <div class="form">
         <h2>Login</h2>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="error-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
         <form method="POST">
             {% csrf_token %}
             <div class="input">
@@ -107,6 +126,9 @@
                 </div>
             </div>
         </form>
+        <div class="register-link">
+            <p>Don't have an account? <a href="/register">Register here</a></p>
+        </div>
     </div>
 </body>
 </html>

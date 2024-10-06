@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Portfolio Builder</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background for contrast */
+            padding: 20px; /* Padding for overall page */
+        }
+
+        .about-container {
+            max-width: 800px; /* Max width for the about section */
+            margin: auto; /* Center the about section */
+            background: white; /* White background for the section */
+            padding: 20px; /* Padding for the section */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        h1 {
+            color: #333; /* Darker text for contrast */
+            margin-bottom: 20px; /* Space below the heading */
+        }
+
+        h2 {
+            color: #007bff; /* Primary color for subheadings */
+            margin-top: 20px; /* Space above subheadings */
+        }
+
+        p {
+            line-height: 1.6; /* Better line spacing for readability */
+        }
+    </style>
+</head>
+<body>
+    {% include 'components/navbar.html' %} 
+
+    <div class="about-container">
+        <h1>About Us</h1>
+        <p>We are a group of 3rd year Computer Engineering students from Holy Angel University. This website is our final output for the subject Software Development.</p>
+        
+        <h2>Meet the Team</h2>
+        <ul>
+            <li>Kian Jacob Lxamana</li>
+            <li>Josh Mark Escaño</li>
+            <li>Reinael Yabut</li>
+            <li>Vince Gerente</li>
+        </ul>
+    </div>
+
+</body>
+{% include 'components/footer.html' %} 
+</html>
