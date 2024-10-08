@@ -1,26 +1,67 @@
+<!-- edit_portfolio.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Portfolio</title>
+    <title>Create a Portfolio</title>
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-    <script src="https://cdn.ckeditor.com/4.16.0/standard/adapters/jquery.js"></script>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .edit-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        button {
+            background-color: brown;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #a52a2a;
+        }
         .errorlist {
             color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Create Portfolio Item</h1>
+    <div class="edit-container">
+        <h1>Create custom portfolio</h1>
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
 
-            <button type="submit">Submit</button>
+            <button type="submit">Save Changes</button>
         </form>
 
         <div>
@@ -40,64 +81,8 @@
     </div>
 
     <script>
-        // Custom file upload handler for CKEditor
-        function uploadImage(editor) {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.onchange = function() {
-                const file = fileInput.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        // Insert the image into the editor
-                        editor.insertHtml(`<img src="${e.target.result}" class="ck-image" style="max-width:100%; height:auto;" />`);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            };
-            fileInput.click();
-        }
-
-        // Initialize CKEditor for all textareas in the form with image upload and resize features
-        CKEDITOR.replaceAll('editor', {
-            extraPlugins: 'uploadimage',
-            filebrowserUploadUrl: '/upload/image', // Adjust according to your upload URL
-            filebrowserUploadMethod: 'form',
-            on: {
-                instanceReady: function(evt) {
-                    // Create a custom button for image upload
-                    const editor = evt.editor;
-                    editor.ui.addButton('ImageUpload', {
-                        label: 'Upload Image',
-                        command: 'uploadImage',
-                        toolbar: 'insert',
-                    });
-
-                    editor.addCommand('uploadImage', {
-                        exec: function(editor) {
-                            uploadImage(editor);
-                        }
-                    });
-                }
-            },
-        });
-
-        // Allow image resizing
-        CKEDITOR.on('dialogDefinition', function(ev) {
-            const dialogName = ev.data.name;
-            const dialogDefinition = ev.data.definition;
-
-            if (dialogName === 'image') {
-                const infoTab = dialogDefinition.getContents('info');
-                infoTab.onHide = function() {
-                    const imageElement = ev.data.dialog.getContentElement('info', 'src');
-                    if (imageElement) {
-                        imageElement.setValue('');
-                    }
-                };
-            }
-        });
+        // Initialize CKEditor for all textareas in the form
+        CKEDITOR.replaceAll();
     </script>
 </body>
 </html>
