@@ -87,7 +87,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)  # Log out the user
-    return redirect('login') 
+    return redirect('') 
 
 
 
