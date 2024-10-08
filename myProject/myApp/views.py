@@ -31,10 +31,18 @@ def terms_and_conditions(request):
 
     return render(request, 'components/terms_and_conditions.html')
 
-def main(request):
-    context={}
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 
+def main(request):
+    # Check if the user is authenticated
+    if not request.user.is_authenticated:
+        # Redirect to the previous page
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+    context = {}
     return render(request, 'myApp/main.html', context)
+
 
 def create(request):
     context={}
