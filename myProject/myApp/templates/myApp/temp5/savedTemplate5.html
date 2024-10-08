@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             margin: 0;
             padding: 20px;
         }
@@ -18,16 +18,30 @@
             justify-content: center;
         }
         .portfolio-card {
-            background-color: white;
-            border: 1px solid #ddd;
+            background-color: rgb(183, 194, 201);
+            border: 1px solid #000000;
             border-radius: 5px;
             padding: 15px;
             width: 300px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-style: dotted;
+            border-width: thick;
+        }
+
+        .portfolio-card h3 {
+            background-color: #5b88bb;
+            text-align: center;
         }
         .portfolio-card h2 {
             font-size: 1.5em;
             margin: 0 0 10px;
+            text-align: center;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
         }
         .portfolio-card p {
             font-size: 1em;
@@ -37,6 +51,7 @@
             width: 100px;
             height: auto;
             margin-bottom: 10px;
+            border-radius: 50%;
         }
         .button-container {
             display: flex;
@@ -56,82 +71,45 @@
         .btn-delete {
             background-color: #dc3545;
         }
-
-        .resume-section {
-    margin-bottom: 20px; /* Space between sections */
-}
-
-.resume-section h3 {
-    font-size: 1.3em; /* Section title size */
-    margin-bottom: 5px; /* Space below the section title */
-    color: #333; /* Darker color for better readability */
-    border-bottom: 2px solid brown; /* Underline effect for section titles */
-    padding-bottom: 5px; /* Space below the underline */
-}
-
-.resume-section p {
-    font-size: 1em; /* Regular text size */
-    color: #555; /* Text color */
-    margin: 5px 0; /* Space between paragraphs */
-}
-
-.resume-section strong {
-    color: brown; /* Emphasize labels */
-}
-
     </style>
 </head>
 
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Saved Templates 5</h1>
+    <h1>Saved Templates</h1>
     <div class="portfolio-container">
         {% for profile in templates %}
-        <div class="portfolio-card" id="profile-{{ profile.id }}">
-            <h2>{{ profile.user.username }}</h2>
-            <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
-            
-            <div class="resume-section">
-                <h3>Description</h3>
-                <p>{{ profile.description }}</p>
+            <div class="portfolio-card" id="profile-{{ profile.id }}">
+                <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous" class="center"><h2>{{ profile.name }}</h2>
+                <p><b>{{ profile.description }}</b></p>
+
+                <h3>NATIONALITY</h3>
+                <li><b>{{ profile.background_nationality }}</b></li>
+
+                <h3>HOMETOWN</h3>
+                <li><b>{{ profile.background_hometown }}</b></li>
+
+                <h3>LANGUAGE</h3>
+                <li><b>{{ profile.background_languages }}</b></li>
+
+                <h3>SKILLS</h3>
+                <li><b>{{ profile.skills }}</b></li>
+
+                <h3>EDUCATION</h3>
+                <li><b>{{ profile.education }}</b></li>
+
+                <h3>EXPERIENCE</h3>
+                <li><b>{{ profile.experience }}</b></li>
+
+                <div class="button-container">
+                    <a href="{% url 'template5-edit' profile.id %}" class="btn">Edit</a>
+                    <form action="{% url 'template5-delete' profile.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>
+                    <button class="btn" onclick="downloadPDF('{{ profile.id }}')">Download</button>
+                </div>
             </div>
-            
-            <div class="resume-section">
-                <h3>Background</h3>
-                <p><strong>Nationality:</strong> {{ profile.background_nationality }}</p>
-                <p><strong>Hometown:</strong> {{ profile.background_hometown }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Languages</h3>
-                <p>{{ profile.background_languages }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Skills</h3>
-                <p>{{ profile.skills }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Education</h3>
-                <p>{{ profile.education }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Experience</h3>
-                <p>{{ profile.experience }}</p>
-            </div>
-            
-            <div class="button-container">
-                <a href="{% url 'template5-edit' profile.id %}" class="btn">Edit</a>
-                <form action="{% url 'template5-delete' profile.id %}" method="POST" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-delete">Delete</button>
-                </form>
-                <button class="btn" onclick="downloadPDF('{{ profile.id }}')">Download</button>
-            </div>
-        </div>
-        
         {% empty %}
             <div class="portfolio-card">No profiles available.</div>
         {% endfor %}

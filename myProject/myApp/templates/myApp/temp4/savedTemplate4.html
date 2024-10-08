@@ -18,8 +18,8 @@
             justify-content: center;
         }
         .portfolio-card {
-            background-color: white;
-            border: 1px solid #ddd;
+            background-color: rgb(243, 221, 192);
+            border: 1px solid #a78b6c;
             border-radius: 5px;
             padding: 15px;
             width: 300px;
@@ -28,6 +28,7 @@
         .portfolio-card h2 {
             font-size: 1.5em;
             margin: 0 0 10px;
+            text-align: center;
         }
         .portfolio-card p {
             font-size: 1em;
@@ -37,6 +38,13 @@
             width: 100px;
             height: auto;
             margin-bottom: 10px;
+            border-radius: 50%;
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
         }
         .button-container {
             display: flex;
@@ -45,7 +53,7 @@
         }
         .btn {
             background-color: #007BFF;
-            color: white;
+            color: rgb(255, 255, 255);
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
@@ -65,14 +73,16 @@
     font-size: 1.3em; /* Section title size */
     margin-bottom: 5px; /* Space below the section title */
     color: #333; /* Darker color for better readability */
-    border-bottom: 2px solid brown; /* Underline effect for section titles */
-    padding-bottom: 5px; /* Space below the underline */
+    border-top: 2px solid rgb(168, 149, 149);
+    border-bottom: 2px solid rgb(168, 149, 149); /* Underline effect for section titles */
+    text-align: center;
 }
 
 .resume-section p {
     font-size: 1em; /* Regular text size */
     color: #555; /* Text color */
     margin: 5px 0; /* Space between paragraphs */
+    text-align: center;
 }
 
 .resume-section strong {
@@ -84,14 +94,15 @@
 
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Saved Templates 4</h1>
+    <h1>Saved Templatsses</h1>
     <div class="portfolio-container">
         {% for profile in templates %}
         <div class="portfolio-card" id="profile-{{ profile.id }}">
-            <h2>{{ profile.user.username }}</h2>
-            <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
+            <h2>{{ profile.name}}</h2>
+            <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous" class="center">
             
             <div class="resume-section">
+                
                 <h3>Description</h3>
                 <p>{{ profile.description }}</p>
             </div>
@@ -132,6 +143,7 @@
             </div>
         </div>
         
+
         {% empty %}
             <div class="portfolio-card">No profiles available.</div>
         {% endfor %}
