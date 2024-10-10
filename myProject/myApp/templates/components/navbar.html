@@ -139,9 +139,7 @@
   <body>
     <header>
       <nav>
-        <h1>
-          <a href="{% url 'main' %}" style="color: white; text-decoration: none;">Build-A-Porty</a>
-        </h1>
+        <h1><a href="{% url 'main' %}" style="color: white; text-decoration: none;">Build-A-Porty</a></h1>
         <div class="hamburger" onclick="toggleMenu()">
           <div></div>
           <div></div>
@@ -156,7 +154,7 @@
               <li><a href="{% url 'login' %}">Login</a></li>
             {% endif %}
           {% endif %}
-          
+
           <li>
             <a href="#" onclick="toggleDropdown()">Profile</a>
             <div class="dropdown" id="profileDropdown">
@@ -167,11 +165,6 @@
               <a href="{% url 'template4_list' %}?template=4">Template 4</a>
               <a href="{% url 'template5_list' %}?template=5">Template 5</a>
             </div>
-          </li>
-
-          <!-- Go Back Button -->
-          <li>
-            <a href="javascript:void(0)" onclick="goBack()">Go Back</a>
           </li>
         </ul>
       </nav>
