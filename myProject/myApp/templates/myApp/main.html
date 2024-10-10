@@ -3,87 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Choose a Portfolio Template</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
-
         body {
-            background-color: #f4f4f4;
+            background-color: #f5f7fa;
             color: #333;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
+            justify-content: flex-start;
+            min-height: 100vh;
             padding: 20px;
-            width: 100%;
-            text-align: center;
         }
-
-        header h1 {
-            margin: 0;
-        }
-
         .template-container {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Changed to nowrap for horizontal alignment */
             justify-content: center;
             max-width: 1200px;
             width: 100%;
-            padding: 20px;
+            padding: 40px 0;
+            gap: 20px;
+            overflow-x: auto; /* Allow horizontal scrolling on smaller screens */
         }
-
         .template-card {
             background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            margin: 15px;
-            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 25px;
             text-align: center;
-            width: 300px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s;
+            width: 280px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+            overflow: hidden;
         }
-
         .template-card:hover {
-            transform: scale(1.05);
+            transform: translateY(-10px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
         }
-
         .template-card h3 {
+            font-size: 1.8rem;
             margin-bottom: 15px;
+            color: #2c3e50;
         }
-
         .btn-select {
-    background-color: #ff7f50;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Ensure it behaves like a button */
-    text-align: center; /* Center text inside the button */
-}
-
-.btn-select:hover {
-    background-color: #e67044;
-}
-
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+        }
+        .btn-select:hover {
+            background-color: #2980b9;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
         footer {
             margin-top: 30px;
+            padding: 20px;
             text-align: center;
-            color: #333;
+            color: #666;
+        }
+        .image-container {
+            width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        body, p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .template-card p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        @media (max-width: 768px) {
+            .template-container {
+                flex-direction: row; /* Maintain horizontal layout on smaller screens */
+                overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+            }
+            .template-card {
+                width: 280px; /* Keep card width consistent */
+            }
         }
     </style>
 </head>
@@ -103,45 +123,34 @@
 
         <!-- Template 1 -->
         <div class="template-card">
-            <h3>Template 1</h3>
-            <p>A clean and modern design for your portfolio.</p>
+            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 1"></div>
             <a href="{% url 'template1_create' %}" class="btn-select">Select Template</a>
         </div>
 
         <!-- Template 2 -->
         <div class="template-card">
-            <h3>Template 2</h3>
-            <p>An artistic layout perfect for creatives.</p>
+            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 2"></div>
             <a href="{% url 'template2_create' %}" class="btn-select">Select Template</a>
-         </div>
+        </div>
 
         <!-- Template 3 -->
         <div class="template-card">
-            <h3>Template 3</h3>
-            <p>A minimalistic approach to showcase your work.</p>
+            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 3"></div>
             <a href="{% url 'template3_create' %}" class="btn-select">Select Template</a>
         </div>
 
         <!-- Template 4 -->
         <div class="template-card">
-            <h3>Template 4</h3>
-            <p>A professional layout for freelancers and agencies.</p>
+            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 4"></div>
             <a href="{% url 'template4_create' %}" class="btn-select">Select Template</a>
         </div>
 
         <!-- Template 5 -->
         <div class="template-card">
-            <h3>Template 5</h3>
-            <p>A bold and creative design to impress potential clients.</p>
+            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5"></div>
             <a href="{% url 'template5_create' %}" class="btn-select">Select Template</a>
         </div>
-
-        <!-- Template 6 -->
-        
     </div>
-
-    {% include 'components/footer.html' %} 
+    {% include 'components/footer.html' %}
 </body>
-
-
 </html>
