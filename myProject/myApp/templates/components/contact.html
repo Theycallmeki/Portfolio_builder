@@ -1,102 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Portfolio Builder</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      rel="stylesheet"
+    />
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            padding-top: 40px; /* Adjust padding to prevent content from hiding behind the navbar */
-            background-color: #f4f4f4; /* Light background for contrast */
-        }
+.social-icon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 50%;
+  border: 2px solid #2b2b2c;
+  background-color: #2b2b2c;
+  color: white;
+  font-size: 24px;
+  transition: background-color 0.3s, color 0.3s;
+}
 
-        /* Contact form styles */
-        .contact-container {
-            max-width: 1000px; /* Set maximum width for the form */
-            width: 90%; /* Set width to 90% of the viewport */
-            margin: 20px auto; /* Center the form */
-            background: white; /* White background for the form */
-            padding: 60px; /* Increased padding for the form */
-            border-radius: 5px; /* Rounded corners */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        }
+.social-icon:hover {
+  background-color: white;
+  color: #2b2b2c;
+}
 
-        .contact-container h1 {
-            margin-bottom: 20px; /* Space below the heading */
-            color: #333; /* Darker text for contrast */
-            font-size: 2em; /* Increased font size for heading */
-        }
+.contact-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  background-color: #f8f9fa;
+  padding: 80px;
+}
 
-        .contact-container div {
-            margin-bottom: 20px; /* Space between form elements */
-        }
+.contact-form {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* Wider form */
+}
 
-        .contact-container label {
-            display: block; /* Full width labels */
-            margin-bottom: 5px; /* Space below labels */
-            font-weight: bold; /* Bold labels */
-            font-size: 1.1em; /* Slightly larger font for labels */
-        }
+.form-group h5 {
+  margin-bottom: 10px;
+}
 
-        .contact-container input[type="text"],
-        .contact-container input[type="email"],
-        .contact-container textarea {
-            width: 100%; /* Full width inputs */
-            padding: 15px; /* Increased padding inside inputs */
-            border: 1px solid #ccc; /* Border for inputs */
-            border-radius: 5px; /* Rounded corners */
-            font-size: 18px; /* Increased font size for inputs */
-        }
+.contact-form button {
+  width: 10%;
+  margin-top: 10px;
+}
 
-        .contact-container textarea {
-            height: 150px; /* Increased height for the textarea */
-            resize: none; /* Disable resizing */
-        }
+.contact-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
 
-        .contact-container input[type="submit"] {
-            background-color: #007bff; /* Button background color */
-            color: white; /* Button text color */
-            border: none; /* No border */
-            padding: 15px 20px; /* Increased padding inside the button */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer on hover */
-            font-size: 18px; /* Increased font size for button */
-            transition: background-color 0.3s; /* Smooth background change */
-        }
-
-        .contact-container input[type="submit"]:hover {
-            background-color: orange; /* Change on hover */
-        }
     </style>
-</head>
-<body>
 
-  {% include 'components/navbar.html' %}
+    <script src="contact.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+    ></script>
+    <script type="text/javascript">
+      (function () {
+        emailjs.init("iauDBcNZna2qqRfo5");
+      })();
+    </script>
+  </head>
+  <body>
+    {% include 'components/navbar.html' %}
+    <div class="contact-container">
+      <div class="contact-form">
+        <div class="contact-header">
+          <h1>Contact Us</h1>
+        </div>
+        <div class="form-group">
+          <h5 for="name">Name</h5>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Enter name"
+          />
+        </div>
+        <div class="form-group">
+          <h5 for="email">Email</h5>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+          />
+        </div>
+        <div class="form-group">
+          <h5 for="message">Message</h5>
+          <textarea
+            class="form-control"
+            id="message"
+            rows="3"
+            placeholder="Enter your message"
+          ></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="sendMail()">Submit</button>
+      </div>
+    </div>
+    <script>
+      function goBack() {
+        window.history.back();
+      }
 
-<div class="contact-container">
-    <h1>Contact Us</h1>
-    <p>Please fill in the form below to get in touch with us.</p>
-    <form>
-        <div>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div>
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" required></textarea>
-        </div>
-        <div>
-            <input type="submit" value="Send Message">
-        </div>
-    </form>
-</div>
+      function sendMail() {
+        var params = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          message: document.getElementById("message").value,
+        };
 
-{% include 'components/footer.html' %} 
-</body>
+        const serviceID = "service_3i0edos";
+        const templateID = "template_7b21yu5";
+
+        emailjs
+          .send(serviceID, templateID, params)
+          .then((res) => {
+            document.getElementById("name").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("message").value = "";
+            console.log(res);
+            alert("Your message sent successfully!!");
+          })
+          .catch((err) => console.log(err));
+      }
+    </script>
+    {% include 'components/footer.html' %}
+  </body>
 </html>
