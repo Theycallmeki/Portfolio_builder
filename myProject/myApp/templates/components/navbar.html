@@ -45,6 +45,7 @@
 
       nav ul li {
         margin-left: 20px;
+        position: relative;
       }
 
       nav ul li a {
@@ -59,6 +60,38 @@
       nav ul li a.active {
         background-color: orange;
         color: black; /* Optional: change text color when active */
+      }
+
+      /* Dropdown styling */
+      .dropdown {
+        display: none;
+        position: absolute;
+        background-color: grey;
+        top: 40px;
+        right: 0;
+        width: 200px;
+        border-radius: 5px;
+        z-index: 1001; /* Ensure it stays above other content */
+      }
+
+      .dropdown a {
+        display: block;
+        padding: 10px;
+        color: white;
+        text-decoration: none;
+        border-bottom: 1px solid #ccc;
+        background-color: #007bff;
+        transition: background-color 0.3s;
+      }
+
+      .dropdown a:hover {
+        background-color: orange;
+        color: black;
+      }
+
+      /* Show the dropdown when active */
+      .dropdown.active {
+        display: block;
       }
 
       /* Hamburger menu styles */
@@ -106,22 +139,40 @@
   <body>
     <header>
       <nav>
-        <h1><a href="{% url 'main' %}" style="color: white; text-decoration: none;">Build-A-Porty</a></h1>
+        <h1>
+          <a href="{% url 'main' %}" style="color: white; text-decoration: none;">Build-A-Porty</a>
+        </h1>
         <div class="hamburger" onclick="toggleMenu()">
           <div></div>
           <div></div>
           <div></div>
         </div>
         <ul id="navbar">
-            <!-- <li><a href="{% url 'main' %}">Home</a></li> -->
-            {% if request.path != '/login/' %}
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                    <li><a href="{% url 'login' %}">Login</a></li>
-                {% endif %}
+          <!-- <li><a href="{% url 'main' %}">Home</a></li> -->
+          {% if request.path != '/login/' %}
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% else %}
+              <li><a href="{% url 'login' %}">Login</a></li>
             {% endif %}
-            <li><a href="{% url 'portfolio_list' %}">Profile</a></li>
+          {% endif %}
+          
+          <li>
+            <a href="#" onclick="toggleDropdown()">Profile</a>
+            <div class="dropdown" id="profileDropdown">
+              <a href="{% url 'portfolio_list' %}?template=1">Your Custom Portfolio</a>
+              <a href="{% url 'template_list' %}?template=1">Template 1</a>
+              <a href="{% url 'template2_list' %}?template=2">Template 2</a>
+              <a href="{% url 'template3_list' %}?template=3">Template 3</a>
+              <a href="{% url 'template4_list' %}?template=4">Template 4</a>
+              <a href="{% url 'template5_list' %}?template=5">Template 5</a>
+            </div>
+          </li>
+
+          <!-- Go Back Button -->
+          <li>
+            <a href="javascript:void(0)" onclick="goBack()">Go Back</a>
+          </li>
         </ul>
       </nav>
     </header>
@@ -130,6 +181,11 @@
       function toggleMenu() {
         const navbar = document.getElementById("navbar");
         navbar.classList.toggle("active");
+      }
+
+      function toggleDropdown() {
+        const profileDropdown = document.getElementById("profileDropdown");
+        profileDropdown.classList.toggle("active");
       }
 
       // JavaScript to hide the Go Back nav item on /main
