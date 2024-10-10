@@ -37,13 +37,15 @@ class AboutMe(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='about_me', null=True)
     name = models.CharField(max_length=100, null=True)  # Allow null values
     image = models.ImageField(upload_to='media/')
-    description = models.CharField(max_length=200)
+    description = models.TextField(max_length=300)
     background_nationality = models.CharField(max_length=100)
     background_hometown = models.CharField(max_length=100)
     background_languages = models.CharField(max_length=255)  
-    skills = models.CharField(max_length=255)  
-    education = models.CharField(max_length=255)  
+    skills = models.TextField(max_length=255)  
+    education = models.TextField(max_length=255)  
     experience = models.TextField()  
+    contact = models.CharField(max_length=255, null=True)  # Added contact field
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='about_me_categories', null=True)
 
     def __str__(self):

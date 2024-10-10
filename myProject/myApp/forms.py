@@ -75,4 +75,5 @@ class AboutMeForm(forms.ModelForm):
             'skills',
             'education',
             'experience',
+            'contact',
         ]

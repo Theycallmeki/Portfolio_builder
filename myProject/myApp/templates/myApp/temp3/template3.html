@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Upload temp 3</title>
+    <title>Create Template 3</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
     <style>
         * {
@@ -19,9 +19,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 150vh; /* Center vertically */
-            padding: 20px;
+            justify-content: flex-start; /* Change to flex-start */
+            min-height: 100vh; /* Ensure body takes full height */
+            padding: 20px; /* Padding around the body */
         }
 
         h1 {
@@ -74,7 +74,6 @@
         }
     </style>
 </head>
-
 <body>
     {% include 'components/navbar.html' %}
     <h1>Upload Your Details for template 3</h1>
