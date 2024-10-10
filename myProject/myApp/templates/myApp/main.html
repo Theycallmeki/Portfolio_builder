@@ -24,13 +24,13 @@
         }
         .template-container {
             display: flex;
-            flex-wrap: nowrap; /* Changed to nowrap for horizontal alignment */
-            justify-content: center;
-            max-width: 1200px;
-            width: 100%;
-            padding: 40px 0;
-            gap: 20px;
-            overflow-x: auto; /* Allow horizontal scrolling on smaller screens */
+            flex-wrap: nowrap; /* Keep in line for slider effect */
+            justify-content: flex-start; /* Align items to the start */
+            max-width: 100%; /* Full width for mobile */
+            padding: 20px 0;
+            gap: 10px; /* Reduced gap for mobile */
+            overflow-x: auto; /* Allow horizontal scrolling */
+            scroll-snap-type: x mandatory; /* Enable snapping */
         }
         .template-card {
             background-color: #fff;
@@ -38,10 +38,12 @@
             border-radius: 15px;
             padding: 25px;
             text-align: center;
-            width: 280px;
+            min-width: 280px; /* Minimum width for cards */
+            flex: 0 0 auto; /* Prevent cards from shrinking */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease-in-out;
             overflow: hidden;
+            scroll-snap-align: start; /* Snap each card into place */
         }
         .template-card:hover {
             transform: translateY(-10px);
@@ -76,7 +78,7 @@
         }
         .image-container {
             width: 100%;
-            height: auto;
+            height: 100%;
             margin-bottom: 15px;
             border-radius: 10px;
             overflow: hidden;
@@ -85,7 +87,7 @@
         .image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Ensure the image covers the container */
         }
         body, p {
             font-size: 1rem;
@@ -96,13 +98,24 @@
             margin-bottom: 20px;
             font-size: 0.95rem;
         }
+        /* Responsive design for mobile view */
         @media (max-width: 768px) {
             .template-container {
-                flex-direction: row; /* Maintain horizontal layout on smaller screens */
-                overflow-x: auto; /* Enable horizontal scrolling on smaller screens */
+                flex-wrap: nowrap; /* Keep items in a single row */
+                padding: 10px 0; /* Adjust padding for mobile */
             }
             .template-card {
-                width: 280px; /* Keep card width consistent */
+                flex: 0 0 auto; /* Maintain width */
+                min-width: 260px; /* Minimum width for smaller screens */
+                scroll-snap-align: center; /* Center snapping for better visibility */
+                margin-right: 10px; /* Add right margin */
+            }
+            .template-card h3 {
+                font-size: 1.5rem; /* Adjust heading size for mobile */
+            }
+            .btn-select {
+                font-size: 0.9rem; /* Adjust button size for mobile */
+                padding: 10px 15px; /* Adjust button padding */
             }
         }
     </style>
@@ -123,34 +136,80 @@
 
         <!-- Template 1 -->
         <div class="template-card">
-            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 1"></div>
-            <a href="{% url 'template1_create' %}" class="btn-select">Select Template</a>
+            <a href="{% url 'template1_create' %}" class="card-link">
+                <div class="image-container">
+                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                </div>
+            </a>
         </div>
 
         <!-- Template 2 -->
         <div class="template-card">
-            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 2"></div>
-            <a href="{% url 'template2_create' %}" class="btn-select">Select Template</a>
+            <a href="{% url 'template2_create' %}" class="card-link">
+                <div class="image-container">
+                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                </div>
+            </a>
         </div>
 
         <!-- Template 3 -->
         <div class="template-card">
-            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 3"></div>
-            <a href="{% url 'template3_create' %}" class="btn-select">Select Template</a>
+            <a href="{% url 'template3_create' %}" class="card-link">
+                <div class="image-container">
+                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                </div>
+            </a>
         </div>
 
         <!-- Template 4 -->
         <div class="template-card">
-            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 4"></div>
-            <a href="{% url 'template4_create' %}" class="btn-select">Select Template</a>
+            <a href="{% url 'template4_create' %}" class="card-link">
+                <div class="image-container">
+                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                </div>
+            </a>
         </div>
 
         <!-- Template 5 -->
         <div class="template-card">
-            <div class="image-container"><img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5"></div>
-            <a href="{% url 'template5_create' %}" class="btn-select">Select Template</a>
+            <a href="{% url 'template5_create' %}" class="card-link">
+                <div class="image-container">
+                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                </div>
+                <p>Select Template 5</p>
+            </a>
         </div>
     </div>
     {% include 'components/footer.html' %}
+
+    <!-- Optional JavaScript for touch scrolling on mobile -->
+    <script>
+        const container = document.querySelector('.template-container');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        container.addEventListener('mousedown', (e) => {
+            isDown = true;
+            container.classList.add('active');
+            startX = e.pageX - container.offsetLeft;
+            scrollLeft = container.scrollLeft;
+        });
+        container.addEventListener('mouseleave', () => {
+            isDown = false;
+            container.classList.remove('active');
+        });
+        container.addEventListener('mouseup', () => {
+            isDown = false;
+            container.classList.remove('active');
+        });
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - container.offsetLeft;
+            const walk = (x - startX) * 3; //scroll-fast
+            container.scrollLeft = scrollLeft - walk;
+        });
+    </script>
 </body>
 </html>

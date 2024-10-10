@@ -92,30 +92,23 @@
             <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
             
             <div class="resume-section">
+                <h3>Education</h3>
+                <p>{{ profile.education }}</p>
+            </div>
+            
+            <div class="resume-section">
                 <h3>Description</h3>
                 <p>{{ profile.description }}</p>
             </div>
             
-            <div class="resume-section">
-                <h3>Background</h3>
-                <p><strong>Nationality:</strong> {{ profile.background_nationality }}</p>
-                <p><strong>Hometown:</strong> {{ profile.background_hometown }}</p>
-            </div>
-            
-            <div class="resume-section">
-                <h3>Languages</h3>
-                <p>{{ profile.background_languages }}</p>
-            </div>
+        
             
             <div class="resume-section">
                 <h3>Skills</h3>
                 <p>{{ profile.skills }}</p>
             </div>
             
-            <div class="resume-section">
-                <h3>Education</h3>
-                <p>{{ profile.education }}</p>
-            </div>
+        
             
             <div class="resume-section">
                 <h3>Experience</h3>
