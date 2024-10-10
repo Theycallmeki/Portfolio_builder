@@ -3,10 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit About Me</title>
+    <title>Template 2</title>
+    {% include 'components/navbar.html' %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e9f3fe; /* Light blue background */
+            margin: 0;
+            padding: 80px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a3e6d; /* Darker blue for the title */
+        }
+
+        form {
+            background-color: #ffffff;
+            border: 1px solid #a6c8e0; /* Lighter blue border */
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto; /* Center the form */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-field {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a6c8e0; /* Lighter blue border for inputs */
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF; /* Primary blue */
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+    </style>
 </head>
 <body>
-    <h1>Edit About Me</h1>
+    <h1>Edit Template 2</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}  <!-- Renders the form fields -->
