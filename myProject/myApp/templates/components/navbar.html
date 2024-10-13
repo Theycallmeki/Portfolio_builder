@@ -12,17 +12,18 @@
       }
 
       header {
-        background-color: #007bff; /* Navbar background color */
-        position: fixed; /* Make the navbar fixed */
-        top: 0; /* Stick to the top */
-        left: 0;
-        right: 0; /* Full width */
-        height: 60px; /* Fixed height */
-        display: flex;
-        align-items: center;
-        padding: 0 20px;
-        z-index: 1000; /* Ensure it stays above other content */
-      }
+  background: linear-gradient(90deg, #29425d, #4c4ec4, #169ec4); /* Linear gradient background */
+  position: fixed; /* Make the navbar fixed */
+  top: 0; /* Stick to the top */
+  left: 0;
+  right: 0; /* Full width */
+  height: 60px; /* Fixed height */
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
 
       nav {
         width: 100%; /* Full width of the header */
@@ -156,16 +157,19 @@
           {% endif %}
 
           <li>
-            <a href="#" onclick="toggleDropdown()">Profile</a>
-            <div class="dropdown" id="profileDropdown">
-              <a href="{% url 'portfolio_list' %}?template=1">Your Custom Portfolio</a>
-              <a href="{% url 'template_list' %}?template=1">Template 1</a>
-              <a href="{% url 'template2_list' %}?template=2">Template 2</a>
-              <a href="{% url 'template3_list' %}?template=3">Template 3</a>
-              <a href="{% url 'template4_list' %}?template=4">Template 4</a>
-              <a href="{% url 'template5_list' %}?template=5">Template 5</a>
-            </div>
+            {% if request.path != '/' %}
+              <a href="#" onclick="toggleDropdown()">Profile</a>
+              <div class="dropdown" id="profileDropdown">
+                <a href="{% url 'portfolio_list' %}?template=1">Your Custom Portfolio</a>
+                <a href="{% url 'template_list' %}?template=1">Template 1</a>
+                <a href="{% url 'template2_list' %}?template=2">Template 2</a>
+                <a href="{% url 'template3_list' %}?template=3">Template 3</a>
+                <a href="{% url 'template4_list' %}?template=4">Template 4</a>
+                <a href="{% url 'template5_list' %}?template=5">Template 5</a>
+              </div>
+            {% endif %}
           </li>
+          
         </ul>
       </nav>
     </header>

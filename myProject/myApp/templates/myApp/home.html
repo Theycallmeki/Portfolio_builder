@@ -16,9 +16,10 @@
     }
 
     body {
-      background-color: #1799ab;
+      background: linear-gradient(to right,#0d3287, #1799ab, #831696);
       color: #333;
-    }
+}
+
 
     header {
       background-color: #007bff;
@@ -62,15 +63,14 @@
 
     /* Hero section */
     .hero {
-  background: url("{% static 'main/bg.png' %}") no-repeat center center/cover;
-  height: 60vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
-}
-
+      background: url("{% static 'main/bg.png' %}") no-repeat center center/cover;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
 
     .hero h2 {
       font-size: 48px;
@@ -97,32 +97,29 @@
 
     /* Features section */
     .features {
-  display: flex;
-  justify-content: space-around;
-  margin: 50px 0;
-  text-align: center;
-}
+      display: flex;
+      justify-content: space-around;
+      margin: 50px 0;
+      text-align: center;
+    }
 
-.feature-box {
-  width: 30%;
-  background-color: #fff;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 15px; /* Make the boxes rounded */
-  transition: all 0.3s ease; /* Smooth transition for hover effect */
-}
+    .feature-box {
+      width: 30%;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
 
-.feature-box h3 {
-  margin-bottom: 15px;
-}
+    .feature-box h3 {
+      margin-bottom: 15px;
+    }
 
-/* Hover effect for feature boxes */
-.feature-box:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Increase shadow on hover */
-  transform: translateY(-5px); /* Slightly lift the box on hover */
-}
-
-
+    .feature-box:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      transform: translateY(-5px);
+    }
 
     /* Footer */
     footer {
@@ -132,16 +129,65 @@
       text-align: center;
       margin-top: 50px;
     }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      nav ul li {
+        margin-left: 0;
+        margin-bottom: 10px;
+      }
+
+      .hero h2 {
+        font-size: 36px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .feature-box {
+        width: 80%;
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav h1 {
+        font-size: 18px;
+      }
+
+      .hero h2 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 14px;
+      }
+
+      .btn-primary {
+        padding: 8px 16px;
+      }
+
+      .feature-box {
+        width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <nav>
-      <h1>Build-a-porty</h1>
-      <ul>
-        <li><a href="{% url 'login' %}">Login</a></li>
-      </ul>
-    </nav>
+            {% include 'components/navbar.html' %}
+
   </header>
 
   <section class="hero">
@@ -167,7 +213,6 @@
     </div>
   </section>
 
-
 </body>
-{% include 'components/footer.html' %} 
+{% include 'components/footer.html' %}
 </html>
