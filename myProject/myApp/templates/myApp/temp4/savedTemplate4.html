@@ -69,6 +69,13 @@
             background-color: #dc3545;
         }
 
+        .btn-edit {
+            background-color: #16a64b;
+        }
+
+
+        
+
         .resume-section {
     margin-bottom: 20px; /* Space between sections */
 }
@@ -98,7 +105,7 @@
 
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Saved template 4</h1>
+    <h1>Saved Template 4</h1>
     <div class="portfolio-container">
         {% for profile in templates %}
         <div class="portfolio-card" id="profile-{{ profile.id }}">
@@ -138,7 +145,7 @@
             </div>
             
             <div class="button-container">
-                <a href="{% url 'template4-edit' profile.id %}" class="btn">Edit</a>
+                <a href="{% url 'template4-edit' profile.id %}" class="btn btn-edit">Edit</a>
                 <form action="{% url 'template4-delete' profile.id %}" method="POST" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-delete">Delete</button>

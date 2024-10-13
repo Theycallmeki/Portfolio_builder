@@ -11,40 +11,83 @@
             margin: 0;
             padding: 20px;
         }
+
         .portfolio-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
-            align-items: flex-start; /* Ensures cards align based on their own height */
-
+            align-items: flex-start;
         }
+
         .portfolio-card {
             background-color: white;
             border: 1px solid #ddd;
             border-radius: 5px;
-            padding: 15px;
-            width: 300px;
+            padding: 20px;
+            width: 300px; /* Keep the container size fixed */
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent overflow of content */
+            word-wrap: break-word; /* Ensure words wrap to fit within container */
         }
+
         .portfolio-card h2 {
-            font-size: 1.5em;
-            margin: 0 0 10px;
+            font-size: 1.8em;
+            margin: 0 0 15px;
+            text-align: center;
+            word-break: break-word; /* Ensure heading doesn't overflow */
         }
-        .portfolio-card p {
-            font-size: 1em;
-            color: #555;
-        }
+
         .portfolio-card img {
             width: 100px;
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            align-self: center;
         }
+
+        .content-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            flex-wrap: wrap; /* Ensure columns wrap if content overflows */
+        }
+
+        .left-column, .right-column {
+            flex: 1;
+            min-width: 0; /* Prevent columns from overflowing */
+        }
+
+        .resume-section {
+            margin-bottom: 20px;
+        }
+
+        .resume-section h3 {
+            font-size: 1.3em;
+            margin-bottom: 5px;
+            color: #333;
+            border-bottom: 2px solid brown;
+            padding-bottom: 5px;
+        }
+
+        .resume-section p {
+            font-size: 1em;
+            color: #555;
+            margin: 5px 0;
+            word-wrap: break-word; /* Prevent content overflow */
+        }
+
+        .resume-section strong {
+            color: brown;
+        }
+
         .button-container {
             display: flex;
             justify-content: space-between;
-            margin-top: 10px;
+            margin-top: 20px;
         }
+
         .btn {
             background-color: #007BFF;
             color: white;
@@ -55,70 +98,57 @@
             text-decoration: none;
             text-align: center;
         }
+
         .btn-delete {
             background-color: #dc3545;
         }
+         
+        .btn-edit {
+            background-color: #16a64b;
+        }
 
-        .resume-section {
-    margin-bottom: 20px; /* Space between sections */
-}
-
-.resume-section h3 {
-    font-size: 1.3em; /* Section title size */
-    margin-bottom: 5px; /* Space below the section title */
-    color: #333; /* Darker color for better readability */
-    border-bottom: 2px solid brown; /* Underline effect for section titles */
-    padding-bottom: 5px; /* Space below the underline */
-}
-
-.resume-section p {
-    font-size: 1em; /* Regular text size */
-    color: #555; /* Text color */
-    margin: 5px 0; /* Space between paragraphs */
-}
-
-.resume-section strong {
-    color: brown; /* Emphasize labels */
-}
+        
 
     </style>
 </head>
 
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Saved Templates 3</h1>
+    <h1>Saved Template 3</h1>
     <div class="portfolio-container">
         {% for profile in templates %}
         <div class="portfolio-card" id="profile-{{ profile.id }}">
-            <h2>{{ profile.user.username }}</h2>
             <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous">
-            
-            <div class="resume-section">
-                <h3>Education</h3>
-                <p>{{ profile.education }}</p>
+            <h2>{{ profile.name }}</h2>
+
+            <div class="content-wrapper">
+                <div class="left-column">
+                    <div class="resume-section">
+                        <h3>Education</h3>
+                        <p>{{ profile.education }}</p>
+                    </div>
+                    
+                    <div class="resume-section">
+                        <h3>Description</h3>
+                        <p>{{ profile.description }}</p>
+                    </div>
+                </div>
+                
+                <div class="right-column">
+                    <div class="resume-section">
+                        <h3>Skills</h3>
+                        <p>{{ profile.skills }}</p>
+                    </div>
+                    
+                    <div class="resume-section">
+                        <h3>Experience</h3>
+                        <p>{{ profile.experience }}</p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="resume-section">
-                <h3>Description</h3>
-                <p>{{ profile.description }}</p>
-            </div>
-            
-        
-            
-            <div class="resume-section">
-                <h3>Skills</h3>
-                <p>{{ profile.skills }}</p>
-            </div>
-            
-        
-            
-            <div class="resume-section">
-                <h3>Experience</h3>
-                <p>{{ profile.experience }}</p>
-            </div>
-            
+
             <div class="button-container">
-                <a href="{% url 'template3-edit' profile.id %}" class="btn">Edit</a>
+                <a href="{% url 'template3-edit' profile.id %}" class="btn btn-edit">Edit</a>
                 <form action="{% url 'template3-delete' profile.id %}" method="POST" style="display:inline;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-delete">Delete</button>
@@ -126,7 +156,6 @@
                 <button class="btn" onclick="downloadPDF('{{ profile.id }}')">Download</button>
             </div>
         </div>
-        
         {% empty %}
             <div class="portfolio-card">No profiles available.</div>
         {% endfor %}
@@ -136,42 +165,34 @@
 
     <script>
         function downloadPDF(profileId) {
-            // Select the profile card to convert to PDF
             var element = document.getElementById('profile-' + profileId);
-    
-            // Hide the edit, delete, download buttons, and user information
             var buttons = element.querySelectorAll('.btn, .btn-delete');
             var userInfo = element.querySelector('h2');
             
             buttons.forEach(button => button.style.display = 'none');
             userInfo.style.display = 'none';
-    
-            // PDF options to ensure it fills the entire page
+
             var opt = {
-                margin: 0, // Remove all margins
-                filename: 'template.pdf', // Name of the downloaded file
-                image: { type: 'jpeg', quality: 1 }, // High-quality images
-                html2canvas: { scale: 2 }, // Improve resolution
+                margin: 0,
+                filename: 'template.pdf',
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 2 },
                 jsPDF: { 
-                    unit: 'px', // Use pixels for units to match screen size
-                    format: [element.offsetWidth, element.offsetHeight], // Use the element's dimensions
-                    orientation: 'portrait' // Change to 'landscape' if necessary
+                    unit: 'px',
+                    format: [element.offsetWidth, element.offsetHeight],
+                    orientation: 'portrait'
                 }
             };
-    
-            // Use html2pdf to generate the PDF
+
             html2pdf()
                 .set(opt)
                 .from(element)
                 .save()
                 .then(() => {
-                    // Show the hidden elements again after PDF is downloaded
                     buttons.forEach(button => button.style.display = 'inline-block');
                     userInfo.style.display = 'block';
                 });
         }
     </script>
-    
-    
 </body>
 </html>

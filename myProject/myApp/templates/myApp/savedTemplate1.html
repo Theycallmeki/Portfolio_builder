@@ -82,6 +82,10 @@
         .btn-delete {
             background-color: #dc3545;
         }
+
+        .btn-edit {
+            background-color: #16a64b;
+        }
     </style>
     
 </head>
@@ -116,7 +120,7 @@
                 <li><b>{{ profile.experience }}</b></li>
 
                 <div class="button-container">
-                    <a href="{% url 'template1-edit' profile.id %}" class="btn">Edit</a>
+                    <a href="{% url 'template1-edit' profile.id %}" class="btn btn-edit">Edit</a>
                     <form action="{% url 'template1-delete' profile.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-delete">Delete</button>

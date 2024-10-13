@@ -18,6 +18,8 @@
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            align-items: flex-start; /* Ensures cards align based on their own height */
+
         }
         .portfolio-card {
             background-color: white;
@@ -31,6 +33,7 @@
             max-width: 500px; /* Allows the card to grow up to 500px */
             display: flex;
             flex-direction: column;
+            
         }
         .portfolio-card h2 {
             font-size: 1.5em;
@@ -102,7 +105,6 @@
         {% if portfolios %}
             {% for portfolio in portfolios %}
                 <div class="portfolio-card" id="portfolio-{{ portfolio.id }}">
-                    <h2>{{ portfolio.title }}</h2>
                     <div class="ckeditor-content">{{ portfolio.description|safe }}</div>
                     <div class="buttons">
                         <button class="download" onclick="downloadPDF('{{ portfolio.id }}')">Download PDF</button>
