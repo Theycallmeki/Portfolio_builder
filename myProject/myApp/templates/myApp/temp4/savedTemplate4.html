@@ -16,6 +16,8 @@
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            align-items: flex-start; /* Ensures cards align based on their own height */
+
         }
         .portfolio-card {
             background-color: rgb(243, 221, 192);
@@ -24,6 +26,8 @@
             padding: 15px;
             width: 300px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: auto; /* Ensure the height adjusts based on content */
+
         }
         .portfolio-card h2 {
             font-size: 1.5em;

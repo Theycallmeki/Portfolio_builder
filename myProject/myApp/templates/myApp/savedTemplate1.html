@@ -11,12 +11,15 @@
             margin: 0;
             padding: 20px;
         }
+    
         .portfolio-container {
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
             justify-content: center;
+            align-items: flex-start; /* Ensures cards align based on their own height */
         }
+    
         .portfolio-card {
             background-color: rgb(183, 194, 201);
             border: 1px solid #000000;
@@ -26,38 +29,45 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-style: dotted;
             border-width: thick;
+            height: auto; /* Ensure the height adjusts based on content */
         }
-
+    
         .portfolio-card h3 {
             background-color: #5b88bb;
             text-align: center;
         }
+    
         .portfolio-card h2 {
             font-size: 1.5em;
             margin: 0 0 10px;
             text-align: center;
         }
+    
         .center {
             display: block;
             margin-left: auto;
             margin-right: auto;
             width: 50%;
         }
+    
         .portfolio-card p {
             font-size: 1em;
             color: #555;
         }
+    
         .portfolio-card img {
             width: 100px;
             height: auto;
             margin-bottom: 10px;
             border-radius: 50%;
         }
+    
         .button-container {
             display: flex;
             justify-content: space-between;
             margin-top: 10px;
         }
+    
         .btn {
             background-color: #007BFF;
             color: white;
@@ -68,15 +78,19 @@
             text-decoration: none;
             text-align: center;
         }
+    
         .btn-delete {
             background-color: #dc3545;
         }
     </style>
+    
 </head>
 
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Saved Template 1</h1>
+<div class="content-box">
+  <h1>Saved Template 1</h1>
+</div>
     <div class="portfolio-container">
         {% for profile in templates %}
             <div class="portfolio-card" id="profile-{{ profile.id }}">
