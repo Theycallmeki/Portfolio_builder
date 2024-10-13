@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: #f4f4f4;
+            background: linear-gradient(to right,#0d3287, #1799ab, #831696);
             color: #333;
             display: flex;
             flex-direction: column;
@@ -76,7 +76,7 @@
 </head>
 <body>
     {% include 'components/navbar.html' %}
-    <h1>Upload Your Details for template 4</h1>
+    <h1>Upload Your details for Template 4</h1>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

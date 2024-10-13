@@ -11,8 +11,6 @@
         display: flex;         /* Enable flexbox */
         flex-direction: column; /* Arrange children vertically */
         box-sizing: border-box; /* Include padding and border in element's total width/height */
-        
-        
     }
 
     /* Universal box-sizing rule */
@@ -54,8 +52,8 @@
     /* Footer links */
     .footer-links {
         display: flex;           /* Flex display for the footer links */
-        flex-wrap: wrap;         /* Allows wrapping to new line */
-        justify-content: flex-end;  /* Align links to the right */
+        flex-direction: row;     /* Default to horizontal for larger screens */
+        justify-content: flex-end; /* Align links to the right */
         padding: 0;              /* Removes padding */
         margin: 0;               /* Removes margin */
     }
@@ -64,6 +62,8 @@
         padding: 0;              /* Removes padding from the list */
         margin: 0;               /* Removes margin from the list */
         display: flex;           /* Flex display for the footer links */
+        flex-direction: row;     /* Default to horizontal list */
+        align-items: center;     /* Center items horizontally */
     }
 
     footer li {
@@ -89,17 +89,25 @@
             align-items: center;     /* Center items */
         }
 
-        /* Footer links hidden by default on mobile */
+        /* Footer links stacked vertically on mobile */
         .footer-links {
-            display: none;           /* Hide links by default on mobile */
-            width: 100%;             /* Full width for dropdown links */
             flex-direction: column; /* Stack links vertically */
-            align-items: center;    /* Center links */
-            margin-top: 10px;        /* Space above the links */
+            align-items: center;     /* Center links horizontally */
+            margin-top: 10px;        /* Adds space above the links */
+            display: none;           /* Hide footer links initially */
         }
 
-        .footer-links.active {
-            display: flex;           /* Show links when active */
+        footer ul {
+            display: flex;           /* Flex display for the footer list */
+            flex-direction: column;  /* Stack links vertically */
+            align-items: center;     /* Center items horizontally */
+            padding: 0;
+            margin: 0;
+        }
+
+        footer li {
+            list-style-type: none;   /* Removes default list styling */
+            margin: 10px 0;          /* Adds vertical spacing between items */
         }
 
         /* "More Links" button visible only on mobile */
@@ -157,7 +165,12 @@
         // Function to toggle the visibility of footer links on mobile view
         function toggleFooterLinks() {
             const links = document.querySelector('.footer-links');
-            links.classList.toggle('active');
+            links.classList.toggle('active'); // Toggle the 'active' class to show/hide links
+            if (links.classList.contains('active')) {
+                links.style.display = 'flex'; // Show the links
+            } else {
+                links.style.display = 'none'; // Hide the links
+            }
         }
     </script>
 </body>
