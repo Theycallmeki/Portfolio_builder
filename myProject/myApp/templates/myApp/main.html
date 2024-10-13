@@ -13,7 +13,7 @@
             font-family: 'Roboto', sans-serif;
         }
         body {
-            background-color: #f5f7fa;
+            background: #06c8cf;
             color: #333;
             display: flex;
             flex-direction: column;
@@ -133,12 +133,13 @@
             <p>Design a custom portfolio from scratch.</p>
             <button class="btn-select" onclick="window.location='{% url 'create_portfolio' %}'">Create</button>
         </div>
+        {% load static %}
 
         <!-- Template 1 -->
         <div class="template-card">
             <a href="{% url 'template1_create' %}" class="card-link">
                 <div class="image-container">
-                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                    <img src="{% static 'main/ki.png' %}" alt="KIAN Image">
                 </div>
             </a>
         </div>
@@ -147,7 +148,7 @@
         <div class="template-card">
             <a href="{% url 'template2_create' %}" class="card-link">
                 <div class="image-container">
-                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                    <img src="{{ MEDIA_URL }}kian/KIAN.png" alt="Template 5">
                 </div>
             </a>
         </div>
@@ -165,7 +166,8 @@
         <div class="template-card">
             <a href="{% url 'template4_create' %}" class="card-link">
                 <div class="image-container">
-                    <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
+                    <img src="{% static 'main/yabs.png' %}" alt="KIAN Image">
+
                 </div>
             </a>
         </div>
@@ -176,7 +178,6 @@
                 <div class="image-container">
                     <img src="https://cdn.discordapp.com/attachments/1198215213825142876/1294014722995257366/image.png?ex=6709789f&is=6708271f&hm=72bf1b51968cb071279b062092b41e3f8ffb709cdb4c3a6d61425427478a18b8&" alt="Template 5">
                 </div>
-                <p>Select Template 5</p>
             </a>
         </div>
     </div>

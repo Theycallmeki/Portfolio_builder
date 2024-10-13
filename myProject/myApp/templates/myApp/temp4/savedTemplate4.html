@@ -98,9 +98,9 @@
     <div class="portfolio-container">
         {% for profile in templates %}
         <div class="portfolio-card" id="profile-{{ profile.id }}">
-            <h2>{{ profile.name}}</h2>
             <img id="image-{{ profile.id }}" src="{{ profile.image.url }}" alt="{{ profile.user.username }}'s image" crossorigin="anonymous" class="center">
-            
+            <h2>{{ profile.name}}</h2>
+
             <div class="resume-section">
                 
                 <h3>Description</h3>
@@ -153,40 +153,37 @@
 
     <script>
         function downloadPDF(profileId) {
-            // Select the profile card to convert to PDF
-            var element = document.getElementById('profile-' + profileId);
-    
-            // Hide the edit, delete, download buttons, and user information
-            var buttons = element.querySelectorAll('.btn, .btn-delete');
-            var userInfo = element.querySelector('h2');
-            
-            buttons.forEach(button => button.style.display = 'none');
-            userInfo.style.display = 'none';
-    
-            // PDF options to ensure it fills the entire page
-            var opt = {
-                margin: 0, // Remove all margins
-                filename: 'template.pdf', // Name of the downloaded file
-                image: { type: 'jpeg', quality: 1 }, // High-quality images
-                html2canvas: { scale: 2 }, // Improve resolution
-                jsPDF: { 
-                    unit: 'px', // Use pixels for units to match screen size
-                    format: [element.offsetWidth, element.offsetHeight], // Use the element's dimensions
-                    orientation: 'portrait' // Change to 'landscape' if necessary
-                }
-            };
-    
-            // Use html2pdf to generate the PDF
-            html2pdf()
-                .set(opt)
-                .from(element)
-                .save()
-                .then(() => {
-                    // Show the hidden elements again after PDF is downloaded
-                    buttons.forEach(button => button.style.display = 'inline-block');
-                    userInfo.style.display = 'block';
-                });
+    // Select the profile card to convert to PDF
+    var element = document.getElementById('profile-' + profileId);
+
+    // Hide the edit, delete, and download buttons
+    var buttons = element.querySelectorAll('.btn, .btn-delete');
+    buttons.forEach(button => button.style.display = 'none');
+
+    // PDF options to ensure it fills the entire page
+    var opt = {
+        margin: 0, // Remove all margins
+        filename: 'template.pdf', // Name of the downloaded file
+        image: { type: 'jpeg', quality: 1 }, // High-quality images
+        html2canvas: { scale: 2 }, // Improve resolution
+        jsPDF: { 
+            unit: 'px', // Use pixels for units to match screen size
+            format: [element.offsetWidth, element.offsetHeight], // Use the element's dimensions
+            orientation: 'portrait' // Change to 'landscape' if necessary
         }
+    };
+
+    // Use html2pdf to generate the PDF
+    html2pdf()
+        .set(opt)
+        .from(element)
+        .save()
+        .then(() => {
+            // Show the hidden elements again after PDF is downloaded
+            buttons.forEach(button => button.style.display = 'inline-block');
+        });
+}
+
     </script>
     
     

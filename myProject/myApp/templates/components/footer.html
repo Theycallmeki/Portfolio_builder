@@ -5,93 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Footer Example</title>
     <style>
-        /* Set height to 100% for body and html */
-        html, body {
-            height: 100%;          /* Full height for both html and body */
-            margin: 0;             /* Remove default margin */
-            display: flex;         /* Enable flexbox */
-            flex-direction: column; /* Arrange children vertically */
-            overflow-x: hidden;    /* Prevent horizontal scrolling */
-            box-sizing: border-box; /* Include padding and border in element's total width/height */
-        }
+     html, body {
+    height: 100%;          /* Full height for both html and body */
+    margin: 0;             /* Remove default margin */
+    display: flex;         /* Enable flexbox */
+    flex-direction: column; /* Arrange children vertically */
+    box-sizing: border-box; /* Include padding and border in element's total width/height */
+}
 
-        /* Universal box-sizing rule */
-        *, *::before, *::after {
-            box-sizing: inherit;    /* Apply box-sizing to all elements */
-        }
+/* Universal box-sizing rule */
+*, *::before, *::after {
+    box-sizing: inherit;    /* Apply box-sizing to all elements */
+}
 
-        .content {
-            flex: 1;                 /* Allow content to grow and fill space */
-            display: flex;           /* Flexbox for content alignment */
-            align-items: center;     /* Center content vertically */
-            justify-content: center;  /* Center content horizontally */
-            padding: 20px;
-        }
+/* Content section */
+.content {
+    flex: 1;                 /* Allow content to grow and fill space */
+    display: flex;           /* Flexbox for content alignment */
+    align-items: center;     /* Center content vertically */
+    justify-content: center;  /* Center content horizontally */
+    padding: 20px;
+}
 
-        footer {
-            background-color: white;  /* Sets the background color to white */
-            padding: 20px;            /* Adds padding around the footer */
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
-            margin-top: auto;         /* Pushes the footer to the bottom */
-            width: 100%;              /* Ensure footer spans the full width */
-            display: flex;            /* Enable flexbox for the footer */
-            flex-direction: column;   /* Arrange children vertically */
-            align-items: center;      /* Center items vertically */
-        }
+/* Footer fixed to bottom */
+footer {
+    background-color: rgb(12, 199, 216);  /* Sets the background color to white */
+    padding: 20px;            /* Adds padding around the footer */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+    position: fixed;          /* Fix the footer to the bottom */
+    bottom: 0;                /* Align footer to the bottom of the screen */
+    width: 100%;              /* Ensure footer spans the full width */
+    display: flex;            /* Enable flexbox for the footer */
+    flex-direction: column;   /* Arrange children vertically */
+    align-items: center;      /* Center items vertically */
+    z-index: 10;              /* Ensure footer appears on top of other content */
+}
 
-        .footer-content {
-            display: flex;            /* Flex display for the footer content */
-            justify-content: space-between; /* Space out children */
-            width: 100%;             /* Ensure full width */
-            align-items: center;      /* Center items vertically */
-        }
+/* Footer content */
+.footer-content {
+    display: flex;            /* Flex display for the footer content */
+    justify-content: space-between; /* Space out children */
+    width: 100%;             /* Ensure full width */
+    align-items: center;      /* Center items vertically */
+}
 
-        .footer-links {
-            display: flex;           /* Flex display for the footer links */
-            flex-wrap: wrap;         /* Allows wrapping to new line */
-            justify-content: flex-end;  /* Align links to the right */
-            padding: 0;              /* Removes padding */
-            margin: 0;               /* Removes margin */
-        }
+/* Footer links */
+.footer-links {
+    display: flex;           /* Flex display for the footer links */
+    flex-wrap: wrap;         /* Allows wrapping to new line */
+    justify-content: flex-end;  /* Align links to the right */
+    padding: 0;              /* Removes padding */
+    margin: 0;               /* Removes margin */
+}
 
-        footer ul {
-            padding: 0;              /* Removes padding from the list */
-            margin: 0;               /* Removes margin from the list */
-            display: flex;           /* Flex display for the footer links */
-        }
+footer ul {
+    padding: 0;              /* Removes padding from the list */
+    margin: 0;               /* Removes margin from the list */
+    display: flex;           /* Flex display for the footer links */
+}
 
-        footer li {
-            list-style-type: none;   /* Removes default list styling */
-            margin: 0 20px;         /* Adds horizontal space between items */
-        }
+footer li {
+    list-style-type: none;   /* Removes default list styling */
+    margin: 0 20px;          /* Adds horizontal space between items */
+}
 
-        footer a {
-            color: black;            /* Sets the link color to black */
-            text-decoration: none;   /* Removes underline from links */
-            font-weight: bold;       /* Makes the text bold */
-            transition: color 0.3s;  /* Smooth transition for hover effect */
-        }
+footer a {
+    color: black;            /* Sets the link color to black */
+    text-decoration: none;   /* Removes underline from links */
+    font-weight: bold;       /* Makes the text bold */
+    transition: color 0.3s;  /* Smooth transition for hover effect */
+}
 
-        footer a:hover {
-            color: #007bff;          /* Changes link color on hover */
-        }
+footer a:hover {
+    color: #007bff;          /* Changes link color on hover */
+}
 
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column; /* Stack content vertically on smaller screens */
-                align-items: center;     /* Center items */
-            }
+/* Responsive styles */
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column; /* Stack content vertically on smaller screens */
+        align-items: center;     /* Center items */
+    }
 
-            footer ul {
-                flex-direction: column; /* Stack links vertically on smaller screens */
-                align-items: center;    /* Center items */
-            }
+    footer ul {
+        flex-direction: column; /* Stack links vertically on smaller screens */
+        align-items: center;    /* Center items */
+    }
 
-            footer li {
-                margin: 10px 0;        /* Adjust spacing for vertical layout */
-            }
-        }
+    footer li {
+        margin: 10px 0;        /* Adjust spacing for vertical layout */
+    }
+}
     </style>
 </head>
 <body>
