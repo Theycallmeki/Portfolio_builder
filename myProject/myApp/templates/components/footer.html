@@ -6,105 +6,140 @@
     <title>Footer Example</title>
     <style>
      html, body {
-    height: 100%;          /* Full height for both html and body */
-    margin: 0;             /* Remove default margin */
-    display: flex;         /* Enable flexbox */
-    flex-direction: column; /* Arrange children vertically */
-    box-sizing: border-box; /* Include padding and border in element's total width/height */
-}
+        height: 100%;          /* Full height for both html and body */
+        margin: 0;             /* Remove default margin */
+        display: flex;         /* Enable flexbox */
+        flex-direction: column; /* Arrange children vertically */
+        box-sizing: border-box; /* Include padding and border in element's total width/height */
+    }
 
-/* Universal box-sizing rule */
-*, *::before, *::after {
-    box-sizing: inherit;    /* Apply box-sizing to all elements */
-}
+    /* Universal box-sizing rule */
+    *, *::before, *::after {
+        box-sizing: inherit;    /* Apply box-sizing to all elements */
+    }
 
-/* Content section */
-.content {
-    flex: 1;                 /* Allow content to grow and fill space */
-    display: flex;           /* Flexbox for content alignment */
-    align-items: center;     /* Center content vertically */
-    justify-content: center;  /* Center content horizontally */
-    padding: 20px;
-}
+    /* Content section */
+    .content {
+        flex: 1;                 /* Allow content to grow and fill space */
+        display: flex;           /* Flexbox for content alignment */
+        align-items: center;     /* Center content vertically */
+        justify-content: center;  /* Center content horizontally */
+        padding: 20px;
+    }
 
-/* Footer fixed to bottom */
-footer {
-    background-color: rgb(12, 199, 216);  /* Sets the background color to white */
-    padding: 20px;            /* Adds padding around the footer */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
-    position: fixed;          /* Fix the footer to the bottom */
-    bottom: 0;                /* Align footer to the bottom of the screen */
-    width: 100%;              /* Ensure footer spans the full width */
-    display: flex;            /* Enable flexbox for the footer */
-    flex-direction: column;   /* Arrange children vertically */
-    align-items: center;      /* Center items vertically */
-    z-index: 10;              /* Ensure footer appears on top of other content */
-}
+    /* Footer fixed to bottom */
+    footer {
+        background-color: rgb(12, 199, 216);  /* Sets the background color to white */
+        padding: 20px;            /* Adds padding around the footer */
+        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+        position: fixed;          /* Fix the footer to the bottom */
+        bottom: 0;                /* Align footer to the bottom of the screen */
+        width: 100%;              /* Ensure footer spans the full width */
+        display: flex;            /* Enable flexbox for the footer */
+        flex-direction: column;   /* Arrange children vertically */
+        align-items: center;      /* Center items vertically */
+        z-index: 10;              /* Ensure footer appears on top of other content */
+    }
 
-/* Footer content */
-.footer-content {
-    display: flex;            /* Flex display for the footer content */
-    justify-content: space-between; /* Space out children */
-    width: 100%;             /* Ensure full width */
-    align-items: center;      /* Center items vertically */
-}
-
-/* Footer links */
-.footer-links {
-    display: flex;           /* Flex display for the footer links */
-    flex-wrap: wrap;         /* Allows wrapping to new line */
-    justify-content: flex-end;  /* Align links to the right */
-    padding: 0;              /* Removes padding */
-    margin: 0;               /* Removes margin */
-}
-
-footer ul {
-    padding: 0;              /* Removes padding from the list */
-    margin: 0;               /* Removes margin from the list */
-    display: flex;           /* Flex display for the footer links */
-}
-
-footer li {
-    list-style-type: none;   /* Removes default list styling */
-    margin: 0 20px;          /* Adds horizontal space between items */
-}
-
-footer a {
-    color: black;            /* Sets the link color to black */
-    text-decoration: none;   /* Removes underline from links */
-    font-weight: bold;       /* Makes the text bold */
-    transition: color 0.3s;  /* Smooth transition for hover effect */
-}
-
-footer a:hover {
-    color: #007bff;          /* Changes link color on hover */
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
+    /* Footer content */
     .footer-content {
-        flex-direction: column; /* Stack content vertically on smaller screens */
-        align-items: center;     /* Center items */
+        display: flex;            /* Flex display for the footer content */
+        justify-content: space-between; /* Space out children */
+        width: 100%;             /* Ensure full width */
+        align-items: center;      /* Center items vertically */
+    }
+
+    /* Footer links */
+    .footer-links {
+        display: flex;           /* Flex display for the footer links */
+        flex-wrap: wrap;         /* Allows wrapping to new line */
+        justify-content: flex-end;  /* Align links to the right */
+        padding: 0;              /* Removes padding */
+        margin: 0;               /* Removes margin */
     }
 
     footer ul {
-        flex-direction: column; /* Stack links vertically on smaller screens */
-        align-items: center;    /* Center items */
+        padding: 0;              /* Removes padding from the list */
+        margin: 0;               /* Removes margin from the list */
+        display: flex;           /* Flex display for the footer links */
     }
 
     footer li {
-        margin: 10px 0;        /* Adjust spacing for vertical layout */
+        list-style-type: none;   /* Removes default list styling */
+        margin: 0 20px;          /* Adds horizontal space between items */
     }
-}
+
+    footer a {
+        color: black;            /* Sets the link color to black */
+        text-decoration: none;   /* Removes underline from links */
+        font-weight: bold;       /* Makes the text bold */
+        transition: color 0.3s;  /* Smooth transition for hover effect */
+    }
+
+    footer a:hover {
+        color: #007bff;          /* Changes link color on hover */
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column; /* Stack content vertically on smaller screens */
+            align-items: center;     /* Center items */
+        }
+
+        /* Footer links hidden by default on mobile */
+        .footer-links {
+            display: none;           /* Hide links by default on mobile */
+            width: 100%;             /* Full width for dropdown links */
+            flex-direction: column; /* Stack links vertically */
+            align-items: center;    /* Center links */
+            margin-top: 10px;        /* Space above the links */
+        }
+
+        .footer-links.active {
+            display: flex;           /* Show links when active */
+        }
+
+        /* "More Links" button visible only on mobile */
+        .footer-toggle {
+            display: block;         /* Show the toggle button on mobile */
+            background-color: #007bff; /* Button background color */
+            color: white;             /* Button text color */
+            padding: 10px 15px;       /* Button padding */
+            border: none;             /* Remove border */
+            cursor: pointer;         /* Pointer cursor on hover */
+            font-weight: bold;        /* Make text bold */
+            transition: background 0.3s; /* Smooth transition for background */
+            margin-top: 10px;         /* Space above the button */
+        }
+
+        .footer-toggle:hover {
+            background-color: #0056b3; /* Change background color on hover */
+        }
+    }
+
+    /* Hide "More Links" button on larger screens */
+    @media (min-width: 769px) {
+        .footer-toggle {
+            display: none;           /* Hide the toggle button on larger screens */
+        }
+    }
     </style>
 </head>
 <body>
+    <div class="content">
+    </div>
+
     <footer>
         <div class="footer-content">
             <div class="footer-left">
                 &copy; 2024 Portfolio Builder. All rights reserved.
             </div>
 
+            <!-- Toggle button only appears on mobile -->
+            <button class="footer-toggle" onclick="toggleFooterLinks()">View More</button>
+
+            <!-- Footer links, initially hidden on mobile -->
             <div class="footer-links">
                 <ul>
                     <li><a href="{% url 'contact' %}">Contact Us</a></li>
@@ -113,8 +148,15 @@ footer a:hover {
                     <li><a href="{% url 'terms_and_conditions' %}">Terms and Conditions</a></li>
                 </ul>
             </div>
-
         </div>
     </footer>
+
+    <script>
+        // Function to toggle the visibility of footer links on mobile view
+        function toggleFooterLinks() {
+            const links = document.querySelector('.footer-links');
+            links.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
