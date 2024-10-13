@@ -30,6 +30,73 @@ def terms_and_conditions(request):
     context={}
 
     return render(request, 'components/terms_and_conditions.html')
+from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.contrib.auth import get_user_model, login
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.http import JsonResponse
+from django.urls import reverse
+
+# Password Reset View (Handles both Request and Confirm)
+def password_reset(request, uidb64=None, token=None):
+    # Password Reset Request
+    if uidb64 is None and token is None:
+        if request.method == 'POST':
+            form = PasswordResetForm(request.POST)
+            if form.is_valid():
+                email = form.cleaned_data["email"]
+                associated_users = User.objects.filter(email=email)
+                if associated_users.exists():
+                    for user in associated_users:
+                        token = default_token_generator.make_token(user)
+                        uidb64 = urlsafe_base64_encode(str(user.pk).encode())  # base64 encoding of the user ID
+                        reset_url = request.build_absolute_uri(
+                            reverse('password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token})
+                        )
+                        # Send email to the user with the reset link
+                        send_mail(
+                            'Password Reset Request',
+                            f'Click the following link to reset your password: {reset_url}',
+                            'no-reply@mywebsite.com',
+                            [email],
+                        )
+                    return JsonResponse({"message": "An email has been sent with instructions to reset your password."})
+                else:
+                    return JsonResponse({"error": "No user found with this email address."})
+
+            return JsonResponse({"error": "Invalid email address."})
+        
+        form = PasswordResetForm()
+        return render(request, 'password/password_reset.html', {'form': form})
+
+    # Password Reset Confirm
+    else:
+        try:
+            uid = urlsafe_base64_decode(uidb64)  # Corrected line: no .decode() needed
+            user = get_user_model().objects.get(pk=uid)  # Get the user object
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            return JsonResponse({"error": "Invalid link."})
+
+        if default_token_generator.check_token(user, token):
+            if request.method == 'POST':
+                form = SetPasswordForm(user, request.POST)
+                if form.is_valid():
+                    form.save()
+                    login(request, user)  # Log the user in automatically
+                    return redirect('login')  # Redirect to the login page after resetting password
+
+                else:
+                    return JsonResponse({"error": "Passwords do not match."})
+
+            form = SetPasswordForm(user)
+            return render(request, 'password/password_reset.html', {'form': form, 'reset': True})
+
+        return JsonResponse({"error": "The reset link is invalid or expired."})
+
+
 
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect

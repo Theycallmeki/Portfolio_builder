@@ -12,6 +12,9 @@ urlpatterns = [
     path('privacy_policy/', views.privacy_policy, name='privacy_policy'),
     path('terms_and_conditions/', views.terms_and_conditions, name='terms_and_conditions'),
 
+    path('password_reset/', views.password_reset, name='password_reset'),
+    path('password_reset/<uidb64>/<token>/', views.password_reset, name='password_reset_confirm'),
+
     path('profile/', views.profile, name='profile'),
     path('navbar/', views.navbar, name='navbar'),
     path('logout/', views.user_logout, name='logout'), 
