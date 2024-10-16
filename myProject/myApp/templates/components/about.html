@@ -115,11 +115,24 @@
             color: #016cec;
         }
 
-        .person-info .full-name {
-            margin-bottom: 10px;
-            font-size: 28px;
-            font-weight: 700;
-        }
+       .person-info {
+    display: flex;
+    justify-content: center; /* Centers the name horizontally */
+    align-items: center; /* Ensures proper vertical alignment */
+    flex-direction: column; /* Stacks the text vertically */
+    text-align: center;
+    margin-top: 10px; /* Adds spacing between the image and name */
+}
+
+.person-info .full-name {
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #333; /* Ensure good contrast with the background */
+    display: block; /* Ensures full width, preventing text from being cut off */
+    width: 100%; /* Makes the name take the full width of the parent container */
+}
+
 
         .person-info .speciality {
             text-transform: uppercase;
